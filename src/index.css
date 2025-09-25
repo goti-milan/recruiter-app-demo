@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.light,.light *));
+
+@theme {
+    /* colors */
+    --color-primary: #3f1562;
+    --color-secondary: #fc5f5f;
+    --color-field: #f7eeff;
+
+    /* fonts */
+    --font-manrope: "Manrope", sans-serif;
+    --font-inter: "Inter", sans-serif;
+}
+
+@font-face {
+    font-family: "Manrope";
+    src: url("/font/Manrope-VariableFont_wght.woff2") format("woff2");
+    font-weight: 200 800;
+    font-display: swap;
+}
+
+button {
+    @apply cursor-pointer;
+}
+
+[data-pc-section="root"] {
+    font-family: var(--font-manrope);
+}

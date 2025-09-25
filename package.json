@@ -1,0 +1,41 @@
+{
+    "name": "recuiter-app",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "author": {
+        "name": "Headsin Inc.",
+        "email": "info@headsin.co",
+        "url": "https://headsin.co"
+    },
+    "scripts": {
+        "dev": "vite --host",
+        "build": "tsc -b && vite build",
+        "lint": "eslint .",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "@hookform/resolvers": "^3.10.0",
+        "@tailwindcss/vite": "^4.1.10",
+        "@tanstack/react-query": "^5.67.1",
+        "axios": "^1.8.1",
+        "chart.js": "^4.4.7",
+        "framer-motion": "^12.6.0",
+        "moment": "^2.30.1",
+        "primeicons": "^7.0.0",
+        "primereact": "^10.9.2",
+        "quill": "^2.0.3",
+        "react": "^19.0.0",
+        "react-chartjs-2": "^5.3.0",
+        "react-dom": "^19.0.0",
+        "react-hook-form": "^7.54.2",
+        "react-router": "^7.1.5",
+        "react-toastify": "^11.0.3",
+        "tailwind-merge": "^3.0.1",
+        "tailwindcss": "^4.1.10",
+        "zod": "^3.24.1"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-react-swc": "^4.1.0"
+    }
+}

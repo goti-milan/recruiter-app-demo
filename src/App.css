@@ -1,0 +1,129 @@
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #efe0fc;
+    border-radius: 5px;
+}
+
+@media screen and (max-width: 768px) {
+    ::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* PrimeReact custom classes */
+.filter-calender [data-pc-name="inputtext"] {
+    border-radius: 0.75rem;
+    @apply w-full rounded-r-none bg-[#F7F7F7] !border-[#EEEEEE];
+}
+
+.filter-calender [data-pc-name="button"] {
+    background-color: #f7f7f7;
+    color: black;
+    padding: 10px;
+    border-radius: 0 0.75rem 0.75rem 0;
+    border: 1px solid #eeeeee;
+    border-left: none;
+    outline: none;
+    box-shadow: none;
+}
+
+.filter-calender [data-pc-name="button"] > svg {
+    width: 20px;
+    height: 20px;
+}
+
+.filter-calender-day [data-p-highlight="true"] {
+    background-color: var(--color-field);
+    color: var(--color-primary);
+}
+
+.date-picker [data-pc-name="inputtext"] {
+    background-color: #f7eeff;
+    color: black;
+    border-radius: 0.75rem 0 0 0.75rem;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    font-size: 1rem;
+    @apply w-full rounded-r-none;
+}
+
+.date-picker [data-pc-name="button"] {
+    background-color: #f7eeff;
+    color: black;
+    border-radius: 0 0.75rem 0.75rem 0;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+.date-picker [data-pc-name="button"] > svg {
+    width: 20px;
+    height: 20px;
+}
+
+.create-job-editor .ql-editor {
+    padding: 10px 5px;
+    max-height: 65vh;
+    overflow-y: auto;
+    word-break: break-all;
+}
+
+.create-job-editor .ql-editor::-webkit-scrollbar {
+    display: none;
+}
+
+.view-job-editor b {
+    font-weight: bold !important;
+}
+
+.view-job-editor strong {    
+    font-weight: bold !important;
+}
+
+.view-job-editor u {
+    text-decoration: underline !important;
+}
+
+.view-job-editor i {
+    font-style: italic !important;
+}
+
+.view-job-editor ul {
+    list-style-type: disc !important;
+    list-style: inside;
+}
+
+.view-job-editor li[data-list="bullet"] {
+    list-style-type: disc !important;
+    list-style: inside;
+}
+
+.view-job-editor li[data-list="ordered"] {
+    list-style-type: decimal !important;
+    list-style: inside;
+}
+
+@media screen and (max-width: 768px) {
+    .create-job-editor .ql-editor {
+        max-height: 70vh;
+    }
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+}
+
+@media (max-width: 1440px) {
+  .card-custom-text {
+    font-size: 13px;
+  }
+  .custom-plan-name{
+    font-size: 23px;
+  }.custom-credit-text{
+    font-size: 13px;
+  }
+}

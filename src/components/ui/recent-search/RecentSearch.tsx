@@ -101,9 +101,9 @@ const RecentSearchTab = ({ setIsSearchChartOpen, setInpValue }: RecentSearchTabP
   if (initialLoad && loading) {
     return (
       <div className="bg-white/50 rounded-2xl h-2 border-[3px] border-white p-3 w-full mt-[15px] max-w-xs">
-        <h3 className="text-[#6b54a3] tracking-wide font-semibold mb-2 flex items-center gap-2">
+        <h3 className="text-[#3F1562] tracking-wide font-semibold mb-2 flex items-center gap-2">
           <RecentSearch />
-          Recent Search
+          Recent Searches
         </h3>
         <div className="border-t border-[#e9e4f3] mb-3" />
         <div className="flex justify-center py-8">
@@ -117,7 +117,7 @@ const RecentSearchTab = ({ setIsSearchChartOpen, setInpValue }: RecentSearchTabP
     <div className="bg-white/50 rounded-2xl xl:h-[360px] md:h-[347px] border-[3px] border-white p-3 w-full mt-[15px] max-w-xs">
       <h3 className="text-[#6b54a3] tracking-wide font-semibold mb-2 flex items-center gap-2">
         <RecentSearch />
-        Recent Search
+        Recent Searches
       </h3>
 
       <div className="border-t border-[#e9e4f3] mb-3" />

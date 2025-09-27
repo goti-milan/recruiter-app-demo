@@ -14,15 +14,19 @@ import { calculateExperience } from "@/helpers/experience-counter";
 import SaralLoader from "../loader/SaralLoader";
 import RegenerateMessageSvg from "@/assets/svg/saral-ai/regenerate-message/RegenerateMessageSvg";
 import { getAuthorizedUserId } from "@/helpers/authorization.ts";
-import { LOGIN } from "@/routes";
+import { LOGIN, SARAL_AI_LINKEDIN_CAMPAIGN } from "@/routes";
 import { useNavigate } from "react-router";
 
 interface SavedProfilesTabProps {
   setSavedProfileCount: Dispatch<SetStateAction<number>>;
+  savedProfilesData: SavedProfile[];
+  setSavedProfilesData: Dispatch<SetStateAction<any[]>>;
 }
 
 const SavedProfilesTab: React.FC<SavedProfilesTabProps> = ({
   setSavedProfileCount,
+  savedProfilesData,
+  setSavedProfilesData,
 }) => {
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -33,6 +37,10 @@ const SavedProfilesTab: React.FC<SavedProfilesTabProps> = ({
 
   const [authorizedUserId, setAutorizedUserId] = useState<string>("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setSavedProfilesData(profiles);
+  }, [profiles]);
 
   useEffect(() => {
     const userId = getAuthorizedUserId();
@@ -118,24 +126,33 @@ const SavedProfilesTab: React.FC<SavedProfilesTabProps> = ({
     );
   }
 
+  const handleMessageCandidate = () => {
+    navigate(SARAL_AI_LINKEDIN_CAMPAIGN, {
+      state: { profiles },
+    });
+  };
+
   return (
-    <div className="w-full mx-auto max-h-[80vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent">
-      <div className="flex items-start justify-between rounded-2xl p-3 sm:p-4 bg-transparent">
+    <div className="w-full mx-auto max-h-[90vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent">
+      <div className="flex items-start justify-between rounded-2xl p-3 sm:p-4 bg-transparent ">
         <span className="text-base sm:text-lg text-[#3D1562] font-medium">
           {profiles.length} Candidates Selected
         </span>
-       <div className="w-full max-w-[12rem] rounded-xl p-[1.5px] bg-gradient-to-r from-[#FFDFA9] to-[#BF9CF9]">
-  <button className="w-full rounded-xl outline-none bg-[#eee7fa] py-2 font-semibold hover:bg-white/90 transition">
-    <span className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#3F1562] to-[#DF6789] bg-clip-text text-transparent text-sm sm:text-base">
-      <RegenerateMessageSvg className="w-4 h-4 sm:w-5 sm:h-5" />
-      <span className="whitespace-nowrap">Generate Message</span>
-    </span>
-  </button>
-</div>
+        <div className="w-full max-w-[12rem] rounded-xl p-[1.5px] bg-gradient-to-r from-[#FFDFA9] to-[#BF9CF9]">
+          <button
+            onClick={() => handleMessageCandidate()}
+            className="w-full rounded-xl outline-none bg-[#eee7fa] py-2 font-semibold hover:bg-white/90 transition"
+          >
+            <span className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#3F1562] to-[#DF6789] bg-clip-text text-transparent text-sm sm:text-base">
+              <RegenerateMessageSvg className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="whitespace-nowrap">Generate Message</span>
+            </span>
+          </button>
+        </div>
       </div>
 
       {/* Profiles Grid - Maintains current layout */}
-      <div className="m-auto grid grid-cols-1 max-w-[1440px] sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 justify-items-center">
+      <div className="m-auto mx-4 h-full grid grid-cols-1 max-w-[1440px] sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 justify-items-center">
         {profiles.map((profile, i) => {
           const experienceData = JSON.parse(profile.experience || "[]");
           const overallExperience = calculateExperience(experienceData);
@@ -170,12 +187,12 @@ const SavedProfilesTab: React.FC<SavedProfilesTabProps> = ({
       </div>
 
       {/* Load More Button - Fixed condition */}
-      {true && (
+      {profiles.length > limit && (
         <div className="flex justify-center py-8">
           <button
             onClick={handleLoadMore}
             disabled={loadingMore}
-            className="px-8 py-2 bg-transparent rounded-xl border-2 font-semibold rounded-full hover:scale-105 transition-all duration-200 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-8 py-2 bg-transparent rounded-xl border-2 font-semibold  hover:scale-105 transition-all duration-200 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
             style={{
               borderImage: "linear-gradient(to right, #de7fdf, #a881fa) 1",
               background: "linear-gradient(to right, #a881fa, #de7fdf)",

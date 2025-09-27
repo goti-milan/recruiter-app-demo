@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
 
 interface RichTextEditorProps {
+  candidate: any;
   candidate_name: string;
   experience: string;
   skills: string;
@@ -13,6 +14,7 @@ interface RichTextEditorProps {
 }
 
 const RichTextEditor: React.FC<RichTextEditorProps> = ({
+  candidate,
   candidate_name = "candidate_name",
   experience = "experience",
   skills = "skills",
@@ -21,26 +23,36 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   const [history, setHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [copied, setCopied] = useState(false);
-  const initialContent = `  <p>Hi ${candidate_name},</p>
 
-    <p>[Personalized opening referencing their current role/company/experience]</p>
+  console.log('candidate in editor:', candidate);
+  
 
-    <p>
-        I came across your profile and was impressed by [specific skill/achievement].
-        We have an exciting {job_title} opportunity at {company_name} that aligns perfectly
-        with your ${skills}, ${experience} of experience.
-    </p>
+  const initialContent = `  <p>Hi ${candidate.name},</p>
 
-    <p>[Brief value proposition - why this role might interest them]</p>
+  <p>
+    I came across your profile and was impressed by your {candidate.experience} 
+    of experience as a {candidate.position}.
+  </p>
 
-    <p>
-        Would love to connect and share more details about this {industry} role.
-    </p>
+  <p>
+    We’re currently looking for a <strong>{job_title}</strong> at <strong>{company_name}</strong>. 
+    Given your expertise in {candidate.skills}, we believe you could be a great fit 
+    for this opportunity.
+  </p>
 
-    <p>Best regards,<br>
-       {recruiter_name}<br>
-       Saral AI
-    </p>`;
+  <p>
+    {value_proposition} <!-- Example: "This role offers the chance to lead high-impact projects in industry and work with a cutting-edge tech stack." -->
+  </p>
+
+  <p>
+    Would you be open to a brief conversation to explore this {industry} opportunity further?
+  </p>
+
+  <p>
+    Best regards,<br>
+    {recruiter_name}<br>
+    Saral AI
+  </p>`;
 
   const saveToHistory = useCallback(() => {
     if (editorRef.current) {
@@ -59,16 +71,26 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       if (editorRef.current) {
         editorRef.current.focus();
 
-        if (command === "insertUnorderedList" || command === "insertOrderedList") {
+        if (
+          command === "insertUnorderedList" ||
+          command === "insertOrderedList"
+        ) {
           const selection = window.getSelection();
           if (selection && selection.rangeCount > 0) {
             const range = selection.getRangeAt(0);
 
             if (range.collapsed) {
               const startContainer = range.startContainer;
-              let paragraph = startContainer.nodeType === Node.TEXT_NODE ? startContainer.parentElement : (startContainer as HTMLElement);
+              let paragraph =
+                startContainer.nodeType === Node.TEXT_NODE
+                  ? startContainer.parentElement
+                  : (startContainer as HTMLElement);
 
-              while (paragraph && !["P", "DIV", "LI"].includes(paragraph.tagName) && paragraph !== editorRef.current) {
+              while (
+                paragraph &&
+                !["P", "DIV", "LI"].includes(paragraph.tagName) &&
+                paragraph !== editorRef.current
+              ) {
                 paragraph = paragraph.parentElement;
               }
 
@@ -110,7 +132,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         saveToHistory();
       }
     },
-    [saveToHistory],
+    [saveToHistory]
   );
 
   const handleUndo = useCallback(() => {
@@ -164,7 +186,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         }
       }
     },
-    [handleCommand, handleUndo, handleRedo],
+    [handleCommand, handleUndo, handleRedo]
   );
 
   const handleInput = useCallback(() => {
@@ -223,7 +245,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   };
 
   return (
-    <div className="w-130 max-w-2xl mx-8 bg-[#fffdfd] rounded-2xl border-[2px] border-[#ffffff] overflow-hidden">
+    <div className="w-full max-w-2xl mx-8 bg-[#fffdfd] rounded-2xl border-[2px] border-[#3F1562] overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gray-50/50">
         <div className="flex items-center space-x-3">
@@ -240,11 +262,19 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             onClick={handleCopy}
             className="flex items-center space-x-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-150"
           >
-            <svg className="w-4 h-4 text-[#3D1562]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              className="w-4 h-4 text-[#3D1562]"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
               <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
             </svg>
-            <span className="text-sm font-medium text-[#3D1562]">{copied ? "Copied!" : "Copy"}</span>
+            <span className="text-sm font-medium text-[#3D1562]">
+              {copied ? "Copied!" : "Copy"}
+            </span>
           </button>
         </div>
       </div>
@@ -262,7 +292,13 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               onClick={handleUndo}
               disabled={historyIndex <= 0}
             >
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 28 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   d="M16.5 10.25H8.88438L11.1263 8.00875L10.25 7.125L6.5 10.875L10.25 14.625L11.1263 13.7406L8.88625 11.5H16.5C17.4946 11.5 18.4484 11.8951 19.1517 12.5983C19.8549 13.3016 20.25 14.2554 20.25 15.25C20.25 16.2446 19.8549 17.1984 19.1517 17.9017C18.4484 18.6049 17.4946 19 16.5 19H11.5V20.25H16.5C17.8261 20.25 19.0979 19.7232 20.0355 18.7855C20.9732 17.8479 21.5 16.5761 21.5 15.25C21.5 13.9239 20.9732 12.6521 20.0355 11.7145C19.0979 10.7768 17.8261 10.25 16.5 10.25Z"
                   fill="#3D1562"
@@ -271,13 +307,21 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             </button>
             <button
               className={`p-1 hover:bg-gray-100 rounded transition-colors duration-150 ${
-                historyIndex >= history.length - 1 ? "opacity-50 cursor-not-allowed" : ""
+                historyIndex >= history.length - 1
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
               }`}
               title="Redo"
               onClick={handleRedo}
               disabled={historyIndex >= history.length - 1}
             >
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 28 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   d="M11.5 10.25H19.1156L16.8737 8.00875L17.75 7.125L21.5 10.875L17.75 14.625L16.8737 13.7406L19.1137 11.5H11.5C10.5054 11.5 9.55161 11.8951 8.84835 12.5983C8.14509 13.3016 7.75 14.2554 7.75 15.25C7.75 16.2446 8.14509 17.1984 8.84835 17.9017C9.55161 18.6049 10.5054 19 11.5 19H16.5V20.25H11.5C10.1739 20.25 8.90215 19.7232 7.96447 18.7855C7.02678 17.8479 6.5 16.5761 6.5 15.25C6.5 13.9239 7.02678 12.6521 7.96447 11.7145C8.90215 10.7768 10.1739 10.25 11.5 10.25V10.25Z"
                   fill="#3D1562"
@@ -293,7 +337,9 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           <div className="flex items-center space-x-1">
             <button
               className={`px-2 py-1 hover:bg-gray-100 rounded transition-colors duration-150 font-bold text-lg ${
-                isFormatActive("bold") ? "bg-gray-200 text-gray-900" : "text-gray-700"
+                isFormatActive("bold")
+                  ? "bg-gray-200 text-gray-900"
+                  : "text-gray-700"
               }`}
               title="Bold"
               onMouseDown={(e) => e.preventDefault()}
@@ -327,12 +373,20 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         {/* Lists */}
         <div className="flex items-center space-x-1">
           <button
-            className={`p-1 hover:bg-gray-100 rounded transition-colors duration-150 ${isListActive("ul") ? "bg-gray-200" : ""}`}
+            className={`p-1 hover:bg-gray-100 rounded transition-colors duration-150 ${
+              isListActive("ul") ? "bg-gray-200" : ""
+            }`}
             title="Bullet List (Ctrl+L)"
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => handleCommand("insertUnorderedList")}
           >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="M4.375 7.5C5.41053 7.5 6.25 6.66053 6.25 5.625C6.25 4.58947 5.41053 3.75 4.375 3.75C3.33947 3.75 2.5 4.58947 2.5 5.625C2.5 6.66053 3.33947 7.5 4.375 7.5Z"
                 fill="#3D1562"
@@ -341,16 +395,27 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                 d="M4.375 16.25C5.41053 16.25 6.25 15.4105 6.25 14.375C6.25 13.3395 5.41053 12.5 4.375 12.5C3.33947 12.5 2.5 13.3395 2.5 14.375C2.5 15.4105 3.33947 16.25 4.375 16.25Z"
                 fill="#3D1562"
               />
-              <path d="M10 13.75H18.75V15H10V13.75ZM10 5H18.75V6.25H10V5Z" fill="#3D1562" />
+              <path
+                d="M10 13.75H18.75V15H10V13.75ZM10 5H18.75V6.25H10V5Z"
+                fill="#3D1562"
+              />
             </svg>
           </button>
           <button
-            className={`p-1 hover:bg-gray-100 rounded transition-colors duration-150 ${isListActive("ol") ? "bg-gray-200" : ""}`}
+            className={`p-1 hover:bg-gray-100 rounded transition-colors duration-150 ${
+              isListActive("ol") ? "bg-gray-200" : ""
+            }`}
             title="Numbered List (Ctrl+O)"
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => handleCommand("insertOrderedList")}
           >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="M10 13.75H18.75V15H10V13.75ZM10 5H18.75V6.25H10V5ZM5 7.5V2.5H3.75V3.125H2.5V4.375H3.75V7.5H2.5V8.75H6.25V7.5H5ZM6.25 17.5H2.5V15C2.5 14.6685 2.6317 14.3505 2.86612 14.1161C3.10054 13.8817 3.41848 13.75 3.75 13.75H5V12.5H2.5V11.25H5C5.33152 11.25 5.64946 11.3817 5.88388 11.6161C6.1183 11.8505 6.25 12.1685 6.25 12.5V13.75C6.25 14.0815 6.1183 14.3995 5.88388 14.6339C5.64946 14.8683 5.33152 15 5 15H3.75V16.25H6.25V17.5Z"
                 fill="#3D1562"

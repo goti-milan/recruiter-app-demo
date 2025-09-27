@@ -320,12 +320,6 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
     setAutorizedUserId(userId ?? "");
   }, []);
 
-  const handleMessageCandidate = () => {
-    navigate(SARAL_AI_LINKEDIN_CAMPAIGN, {
-      state: { candidate },
-    });
-  };
-
   const handleSaveToggle = async () => {
     if (loading) return;
     setLoading(true);
@@ -372,7 +366,7 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: animationDelay }}
-      className="w-full flex-1 min-w-[350px] max-h-[260px]"
+      className="w-full flex-1 min-w-[348px] max-h-[275px]"
       style={{ maxWidth: `${maxWidth}px` }}
     >
       <div
@@ -400,7 +394,7 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
                   </span>
                 </div>
                 <div className="ml-2">
-                  <h1 className="text-sm font-[14px] font-bold text-[#3D1562] mb-0.5">
+                  <h1 className="text-sm text-[14px] font-bold text-[#3D1562] mb-0.5">
                     {candidate.name}
                   </h1>
 
@@ -410,7 +404,7 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
                   </p>
                 </div>
               </div>
-              <div className="bg-transparent border-[2px] border-[#ffffff] rounded-md px-2 py-1">
+              <div className="bg-transparent border-[2px] border-[#ffffff] rounded-md  py-1">
                 <button
                   onClick={handleViewProfile}
                   disabled={!candidate.profileUrl}
@@ -450,11 +444,8 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
                     <p className="text-[#3D1562] text-[12px] mb-0.5 opacity-50">
                       Location
                     </p>
-                    {/* <p className="text-[10px] font-medium text-[#3D1562] opacity-70 text-ellipsis hover:text-clip">
-                    {candidate.location}
-                  </p> */}
                     <p
-                      className="text-[10px] font-medium text-[#3D1562] opacity-70 text-ellipsis hover:text-clip"
+                      className="text-[14px] font-bold text-[#3D1562] opacity-70 text-ellipsis hover:text-clip"
                       style={{
                         maxWidth: "150px",
                         whiteSpace: "nowrap",
@@ -484,8 +475,8 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
                 {isForSavedList && (
                   <>
                     <button
-                      className={`w-full max-w-[45px] bg-white border-[2px] mr-2 border-[#eddddd] hover:opacity-80 rounded-xl text-sm font-bold px-3 py-1.5 transition-all duration-300 ease-in-out
-                text-transparent bg-clip-text bg-gradient-to-r from-[#3F1562] to-[#DF6789]`}
+                      className={`w-full max-w-[40px] bg-white  mr-2  hover:opacity-80 rounded-xl text-sm font-bold px-3 py-1.5 transition-all duration-300 ease-in-out
+                `}
                       onClick={handleDelete}
                     >
                       <Delete />
@@ -494,17 +485,13 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
                 )}
                 {isForSavedList ? (
                   <button
-                    onClick={handleMessageCandidate}
+                    // onClick={handleMessageCandidate}
                     disabled={loading}
                     className={`w-full max-w-[380px] rounded-xl text-sm font-bold px-3 py-1.5 transition-all duration-300 ease-in-out
-                text-transparent bg-clip-text bg-gradient-to-r from-[#3F1562] to-[#DF6789]
-                ${
-                  isSaved
-                    ? "border-[2px] border-[#eddddd] hover:opacity-80"
-                    : "border-[2px] border-[#ffffff] hover:bg-purple-50 hover:border-purple-100"
-                } ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+                text-[#3F1562] bg-white border-[#3F1562] border-[1px] hover:bg-[#3F1562] hover:text-white
+               ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
                   >
-                    Message
+                    Saved
                   </button>
                 ) : (
                   <button

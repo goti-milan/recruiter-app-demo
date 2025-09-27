@@ -1,4 +1,6 @@
 import React, { useCallback, useRef, useState } from "react";
+import UpdateEditorSvg from "../../../assets/svg/saral-ai/update-editor/updateEditor";
+import SendLinkdinSvg from "@/assets/svg/saral-ai/send-linkdin/SendLinkdinSvg";
 
 interface RichTextEditorProps {
   candidate: any;
@@ -23,9 +25,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   const [history, setHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [copied, setCopied] = useState(false);
-
-  console.log('candidate in editor:', candidate);
-  
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const initialContent = `  <p>Hi ${candidate.name},</p>
 
@@ -245,7 +245,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   };
 
   return (
-    <div className="w-full max-w-2xl mx-8 bg-[#fffdfd] rounded-2xl border-[2px] border-[#3F1562] overflow-hidden">
+    <div className="w-full max-w-2xl mx-auto bg-[#fffdfd] rounded-2xl border-[2px] border-[#3F1562] overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gray-50/50">
         <div className="flex items-center space-x-3">
@@ -253,8 +253,10 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             <span className="text-purple-700 font-bold text-xl">L</span>
           </div>
           <div>
-            <div className="text-base font-bold text-gray-900">Leslie A.</div>
-            <div className="text-sm text-gray-500">Frontend Designer</div>
+            <div className="text-base font-bold text-gray-900">
+              {candidate.name}
+            </div>
+            <div className="text-sm text-gray-500">{candidate.headline}</div>
           </div>
         </div>
         <div className="relative">
@@ -280,7 +282,11 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       </div>
 
       {/* Custom Toolbar */}
-      <div className="flex items-center justify-between px-6 py-4 border-t mx-8 rounded-t-xl border-gray-100 bg-[#7517cc1f]">
+      <div
+        className={`flex items-center justify-between px-6 py-4 border-t mx-8 rounded-t-xl border-gray-100 ${
+          isEditMode ? "bg-[#7517cc1f]" : "bg-[#fffdfd]"
+        }`}
+      >
         <div className="flex items-center space-x-4">
           {/* Undo/Redo */}
           <div className="flex items-center space-x-1">
@@ -426,10 +432,14 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       </div>
 
       {/* Editor */}
-      <div className="relative bg-[#7517cc1f] mx-8">
+      <div
+        className={`relative ${
+          isEditMode ? "bg-[#7517cc1f]" : "bg-[#fffdfd]"
+        } mx-8`}
+      >
         <div
           ref={editorRef}
-          contentEditable
+          contentEditable={isEditMode}
           className="h-50 px-6 py-4 text-sm leading-relaxed text-gray-700 focus:outline-none editor-content overflow-y-auto"
           onKeyDown={handleKeyDown}
           onInput={handleInput}
@@ -438,13 +448,32 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-end space-x-3 px-6 py-4 rounded-b-xl border-t border-gray-100 mx-8 mb-8  bg-[#7517cc1f]">
-        <button className="px-6 py-2 text-sm text-[#3F1562] bg-[#fafafa]  border-[2px] border-[#3F1562] hover:bg-purple-100 transition-colors duration-150 rounded-lg hover:border-gray-300">
-          Cancel
-        </button>
-        <button className="px-6 py-2 bg-white hover:bg-[#3F1562] hover:text-white border-[#3F1562] text-[#3F1562] text-sm rounded-lg transition-colors duration-150 font-medium">
-          Done
-        </button>
+      <div
+        className={`flex items-center justify-end space-x-3 px-6 py-4 rounded-b-xl border-t border-gray-100 mx-8 mb-8   ${
+          isEditMode ? "bg-[#7517cc1f]" : "bg-[#fffdfd]"
+        }`}
+      >
+        {isEditMode ? (
+          <>
+            <button
+              className="px-6 py-2 text-sm text-[#3F1562] bg-[#fafafa] border-[2px] border-[#3F1562] hover:bg-purple-100 transition-colors duration-150 rounded-lg hover:border-gray-300"
+              onClick={() => setIsEditMode(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="px-6 py-2 bg-[#3F1562] text-[#ffffff] hover:bg-[#ffffff] hover:text-[#3F1562] border-[#3F1562] text-sm rounded-lg transition-colors duration-150 font-medium"
+              onClick={() => setIsEditMode(false)}
+            >
+              Done
+            </button>
+          </>
+        ) : (
+          <>
+            <UpdateEditorSvg onClick={() => setIsEditMode(true)} />
+            <SendLinkdinSvg />
+          </>
+        )}
       </div>
 
       <style

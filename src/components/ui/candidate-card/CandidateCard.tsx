@@ -372,7 +372,7 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
       <div
         className={`p-[2px] rounded-[20px] transition-all duration-300 
     ${
-      isSaved
+      isSaved && !isForSavedList
         ? "bg-gradient-to-r from-[#DF6789] to-[#3F1562]"
         : "bg-gradient-to-r from-[#F3E8FF] to-[#FDECF5]"
     }`}

@@ -22,7 +22,7 @@ const ProtectedRouter = ({ children }: { children: JSX.Element }) => {
     // Show loading until authentication is determined
     if (isAuthenticated === null) return <div className="h-screen w-full flex items-center justify-center"><Loader isVisible /></div>;
 
-    return !isAuthenticated ? children : <Navigate to="/auth" />;
+    return isAuthenticated ? children : <Navigate to="/auth" />;
 };
 
 export default ProtectedRouter;

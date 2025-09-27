@@ -13,7 +13,7 @@ import {
   SARAL_AI_SAVED_CAMPAIGNS,
 } from "@/routes";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import ColoredLogo from "/src/assets/svg/saral-ai/logo/LogoColor.webp";
 import LinkdinCampaign from "@/assets/svg/saral-ai/linkdin-campaign/LinkdinCampaign";
@@ -28,6 +28,7 @@ import {
   enhancePrompt,
   getSavedProfilesCount,
   getSearchHistoryResults,
+  SavedProfile,
   SavedProfileCountResponse,
   SearchHistoryByIdResponse,
   searchProfiles,
@@ -76,9 +77,17 @@ export default function SaralPromptScreen() {
   const [animatingText, setAnimatingText] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [authorizedUserId, setAutorizedUserId] = useState<string>("");
-  const [linkdinCandidateData, setLinkdinCandidateData] =
-    useState<CandidateData | null>(null);
+  const [linkdinCandidateData, setLinkdinCandidateData] = useState<
+    CandidateData[]
+  >([]);
   const [isSearchChartOpen, setIsSearchChartOpen] = useState(false);
+  const [savedProfilesData, setSavedProfilesData] = useState<SavedProfile[]>(
+    []
+  );
+
+
+ 
+  
 
   useEffect(() => {
     const userId = getAuthorizedUserId();
@@ -155,9 +164,6 @@ export default function SaralPromptScreen() {
     setIsSaved(lastPath === "saved-campaigns");
     if (lastPath === "new") {
       setIsHandleError(false);
-    }
-    if (lastPath === "linkdin-campaign" && location?.state?.candidate) {
-      setLinkdinCandidateData(location.state.candidate);
     }
   }, [location]);
 
@@ -325,7 +331,7 @@ export default function SaralPromptScreen() {
       {!isOpen && (
         <button
           onClick={handleToggleSidebar}
-          className="lg:hidden fixed top-5.5 left-4 z-50 text-[deepViolet] rounded-xl w-10 h-10 flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all duration-200"
+          className="lg:hidden fixed top-5.5 left-4 z-50 text-[#3F1562] rounded-xl w-10 h-10 flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all duration-200"
         >
           <ToggleSVG />
         </button>
@@ -335,7 +341,7 @@ export default function SaralPromptScreen() {
       {sidebarCollapsed && (
         <button
           onClick={handleToggleSidebar}
-          className="lg:block fixed top-4 left-4 z-[9999] text-[deepViolet] rounded-xl w-10 h-10 flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all duration-200"
+          className="lg:block fixed top-4 left-4 z-[9999] text-[#3F1562] rounded-xl w-10 h-10 flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all duration-200"
         >
           <ToggleSVG />
         </button>
@@ -424,17 +430,16 @@ export default function SaralPromptScreen() {
               <span>New Chat</span>
             </button>
 
-            <button
+            {/* <button
               className={`flex items-center ${
                 lastPath === "search"
                   ? "bg-[#f9f1ffbd] border-2 border-[#684e91] text-[#886F9D]"
                   : ""
               } text-[#2d1b4a] gap-2 py-2 px-2 hover:bg-[#a490b5d6] rounded-lg transition font-medium`}
             >
-              {/* Saved Profiles icon */}
               <SearchBar />
               <span>Search</span>
-            </button>
+            </button> */}
 
             <button
               className={`flex items-center ${
@@ -470,7 +475,7 @@ export default function SaralPromptScreen() {
               {/* LinkedIn Campaign icon */}
               <LinkdinCampaign />
 
-              <span>LinkedIn Campaign</span>
+              <span>LinkedIn Outreach</span>
             </button>
           </div>
 
@@ -629,8 +634,8 @@ export default function SaralPromptScreen() {
                 </div>
 
                 {/* Set result cards */}
-                <div className="max-h-[67vh] mt-2 overflow-y-auto">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 mt-4 lg:grid-cols-2 xl:grid-cols-3 2xl-grid-cols-4 gap-6 justify-items-center">
+                <div className="max-h-[67vh] mt-2 overflow-y-auto   ">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 mt-4 lg:grid-cols-2 xl:grid-cols-3 2xl-grid-cols-4 gap-6 justify-items-center mx-2">
                     {SkeletonLoading
                       ? Array.from({ length: 6 }).map((_, index) => (
                           <div
@@ -765,8 +770,8 @@ export default function SaralPromptScreen() {
                 AI message generator
               </motion.h3>
 
-              <span className="text-xs sm:text-sm md:text-base text-purple-800 pr-2 sm:pr-4 md:pr-6 lg:pr-[35px]">
-                1 Candidates Selected
+              <span className="text-xs sm:text-sm md:text-base text-[#3F1562]  pr-2 sm:pr-4 md:pr-6 lg:pr-[35px]">
+                {savedProfilesData?.length} Candidates Selected
               </span>
             </div>
 
@@ -777,13 +782,20 @@ export default function SaralPromptScreen() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              <div className="w-full max-w-2xl">
-                {linkdinCandidateData ? (
-                  <RichTextEditor
-                    candidate_name={`${linkdinCandidateData.name}`}
-                    experience={`${linkdinCandidateData.experience}`}
-                    skills={`${linkdinCandidateData.position}`}
-                  />
+              <div className="w-full ">
+                {savedProfilesData?.length ? (
+                  <div className="grid grid-cols-2 justify-between max-w-[1440px] gap-4 ">
+                    {savedProfilesData.map((candidate, index) => (
+                      <div key={index} className="w-full">
+                        <RichTextEditor
+                          candidate={candidate}
+                          candidate_name={`${candidate.name}`}
+                          experience={`${candidate.experience}`}
+                          skills={`${candidate.skills}`}
+                        />
+                      </div>
+                    ))}
+                  </div>
                 ) : (
                   <div className="h-[80vh] w-[75vw] flex items-center justify-center">
                     <p>No selected candidate</p>
@@ -794,8 +806,12 @@ export default function SaralPromptScreen() {
           </div>
         )}
         {isSaved && (
-          <div className="flex-1 flex justify-center items-center">
-            <SavedProfilesTab setSavedProfileCount={setSavedProfileCount} />
+          <div className="flex-1 flex justify-center items-start h-screen">
+            <SavedProfilesTab
+              setSavedProfileCount={setSavedProfileCount}
+              savedProfilesData={savedProfilesData}
+              setSavedProfilesData={setSavedProfilesData}
+            />
           </div>
         )}
         {/* Footer */}

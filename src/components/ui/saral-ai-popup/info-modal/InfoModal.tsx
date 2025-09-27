@@ -153,6 +153,7 @@ export function SaralInfoModal({ isOpen, onClose }: SaralInfoModalProps) {
 
       <div className="flex justify-end">
         <button
+          onClick={onClose}
           className="px-6 py-2 rounded-lg font-medium text-sm
   bg-gradient-to-r from-yellow-400 via-purple-400 to-pink-500
   bg-clip-text text-transparent border-[2px] border-[#3d156236]

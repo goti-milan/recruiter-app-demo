@@ -74,7 +74,7 @@ export function PricingModal({ isOpen, onClose }: PricingModalProps) {
       </div>
 
       {/* Pricing Grid */}
-      <div className="grid grid-cols-1 font-manrope sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 md:gap-4 lg:gap-6 px-2 sm:px-3 md:px-4 lg:px-6 pb-3 sm:pb-4 md:pb-6">
+      <div className="grid grid-cols-1 font-manrope sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 md:gap-4 lg3:gap-6 px-2 sm:px-3 md:px-4 lg:px-6 pb-3 sm:pb-4 md:pb-6">
         {plans.map((plan) => (
           <div
             key={plan.name}
@@ -89,17 +89,17 @@ export function PricingModal({ isOpen, onClose }: PricingModalProps) {
           >
             {/* Most Popular Badge */}
             <div className="custom-card h-[85%] sm:h-[90%] flex items-center flex-col justify-between">
+
+              {/* Price */}
+              <div className="mb-2 flex flex-col items-start w-full sm:mb-3 mt-1 sm:mt-2">
               {plan.popular && (
-                <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
-                  <span className="custom-most-popular whitespace-nowrap bg-[#3F1562] text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold">
+                <div className="my-auto ml-12 mb-4 left-1/2 transform -translate-x-1/2">
+                  <span className="custom-most-popular whitespace-nowrap bg-[#3F1562] text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold 2xl:text-[9px]">
                     MOST POPULAR
                   </span>
                 </div>
               )}
-
-              {/* Price */}
-              <div className="mb-2 flex flex-col items-start w-full sm:mb-3 mt-1 sm:mt-2">
-                <div className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold text-[#3F1562]">
+                <div className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold text-[#3F1562] 2xl:text-[29px]">
                   {plan.price}{" "}
                   <span className="text-[10px] sm:text-xs md:text-sm lg:text-base font-normal text-[royalPurple]/40">
                     /month
@@ -110,7 +110,7 @@ export function PricingModal({ isOpen, onClose }: PricingModalProps) {
                     <span className="text-[royalPurple]/40 line-through text-xs sm:text-sm">
                       {plan.oldPrice}
                     </span>
-                    <span className="bg-gradient-to-r from-[#FFDFA9]/60 to-[#BF9CF9]/80 rounded-2xl text-white px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs font-semibold">
+                    <span className="bg-[#3D1562] rounded-2xl text-white px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs font-semibold">
                       {plan.discount}
                     </span>
                   </div>
@@ -119,10 +119,10 @@ export function PricingModal({ isOpen, onClose }: PricingModalProps) {
 
               {/* Title & Credits */}
               <div className="flex flex-col items-start w-full pl-2 my-4">
-                <h3 className="custom-plan-name text-sm sm:text-base xl:text-3xl md:text-lg lg:text-xl font-bold text-[#3F1562] mb-0.5 sm:mb-1">
+                <h3 className="custom-plan-name text-sm 2xl:text-[20px] sm:text-base xl:text-3xl md:text-lg lg:text-xl font-bold text-[#3F1562] mb-0.5 sm:mb-1">
                   {plan.name}
                 </h3>
-                <p className="text-[#3D1562]/50 mb-3 xl:text-[20px] font-semibold sm:mb-4 text-[10px] sm:text-xs md:text-sm">
+                <p className="text-[#3D1562]/50 mb-3 xl:text-[20px] font-semibold sm:mb-4 text-[10px] sm:text-xs md:text-sm 2xl:text-[13px] credits-text">
                   {plan.credits} credits → {plan.profiles} profiles
                 </p>
               </div>
@@ -156,7 +156,7 @@ export function PricingModal({ isOpen, onClose }: PricingModalProps) {
 
             {/* CTA Button */}
             <div className="h-[15%] sm:h-[10%] flex items-end">
-              <button className="w-full px-4 sm:px-6 py-2 sm:py-2 outline-none rounded-lg font-medium text-xs sm:text-sm bg-gradient-to-r from-yellow-800 via-purple-800 to-pink-500 bg-clip-text text-transparent border-[2px] border-[#3d156236] transition duration-300 ease-in-out hover:shadow-[0_0_15px_rgba(236,72,153,0.6)] hover:border-purple-50">
+              <button className={`w-full px-4 sm:px-6 py-2 sm:py-2 outline-none rounded-lg font-medium text-xs sm:text-sm  border-[2px] border-[#3d156236] transition duration-300 ease-in-out ${plan.popular ? 'bg-[#3F1562] text-[#ffffff]' : 'text-[#3F1562]'}`}>
                 Choose plan
               </button>
             </div>

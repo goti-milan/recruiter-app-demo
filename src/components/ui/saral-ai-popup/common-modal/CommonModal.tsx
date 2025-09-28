@@ -45,7 +45,7 @@ export const CommonModal: React.FC<CommonModalProps> = ({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 font-manrope z-50 flex items-center justify-center bg-gradient-to-r from-[#D4B062]/20 to-[#3F1562]/20 bg-transparent backdrop-blur-sm px-2 sm:px-4"
+          className="fixed inset-0 font-manrope z-999 flex items-center justify-center bg-gradient-to-r from-[#D4B062]/20 to-[#3F1562]/20 bg-transparent backdrop-blur-sm px-2 sm:px-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

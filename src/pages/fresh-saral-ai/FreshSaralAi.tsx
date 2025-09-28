@@ -137,7 +137,7 @@ export function PromptScreen() {
               >
                 <Star className="w-4 h-4 sm:w-5 sm:h-5" />
               </motion.div>
-              Rephrase
+               <span className="hidden sm:inline">Rephrase</span>
             </motion.button>
 
             {/* Search Button */}

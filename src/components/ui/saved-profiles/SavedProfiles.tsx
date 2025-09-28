@@ -138,10 +138,10 @@ const SavedProfilesTab: React.FC<SavedProfilesTabProps> = ({
         <span className="text-base sm:text-lg text-[#3D1562] font-medium">
           {profiles.length} Candidates Selected
         </span>
-        <div className="w-full max-w-[12rem] rounded-xl p-[1.5px] bg-gradient-to-r from-[#FFDFA9] to-[#BF9CF9]">
+        <div className="w-full max-w-[12rem] rounded-xl p-[1.5px] bg-[#886F9D]">
           <button
             onClick={() => handleMessageCandidate()}
-            className="w-full rounded-xl outline-none bg-[#eee7fa] py-2 font-semibold hover:bg-white/90 transition"
+            className="w-full rounded-xl outline-none bg-[#FFFFFF] py-2 font-semibold hover:bg-white/90 transition"
           >
             <span className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#3F1562] to-[#DF6789] bg-clip-text text-transparent text-sm sm:text-base">
               <RegenerateMessageSvg className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -152,7 +152,7 @@ const SavedProfilesTab: React.FC<SavedProfilesTabProps> = ({
       </div>
 
       {/* Profiles Grid - Maintains current layout */}
-      <div className="m-auto mx-4 h-full grid grid-cols-1 max-w-[1440px] sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 justify-items-center">
+      <div className="m-auto mx-4 h-full grid grid-cols-1 max-w-[1440px] sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 justify-items-center grid-1335-2 grid-1280-1320-2 grid-640-713-1">
         {profiles.map((profile, i) => {
           const experienceData = JSON.parse(profile.experience || "[]");
           const overallExperience = calculateExperience(experienceData);

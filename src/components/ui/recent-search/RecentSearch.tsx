@@ -9,10 +9,11 @@ import { LOGIN } from "@/routes";
 type RecentSearchTabProps = {
   setIsSearchChartOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setInpValue: React.Dispatch<React.SetStateAction<string | null>>;
+  handleMobileSidebarClose : () => void
 };
 
 
-const RecentSearchTab = ({ setIsSearchChartOpen, setInpValue }: RecentSearchTabProps) => {
+const RecentSearchTab = ({ setIsSearchChartOpen, setInpValue, handleMobileSidebarClose }: RecentSearchTabProps) => {
   const [history, setHistory] = useState<SearchHistoryItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true);
@@ -78,7 +79,10 @@ const RecentSearchTab = ({ setIsSearchChartOpen, setInpValue }: RecentSearchTabP
       return (
         <div
           key={item.id}
-          onClick={() => handleHistoryClick(item.id, item.query_text)}
+          onClick={() =>{ handleHistoryClick(item.id, item.query_text) 
+
+            handleMobileSidebarClose()
+          }}
           className="flex justify-between items-center bg-white rounded-xl px-3 py-2 mb-2 shadow-sm border border-[#f0ebf8] cursor-pointer transition-all duration-200 hover:shadow-md hover:border-[#e1d6f2] hover:bg-[#fefefe] active:transform active:scale-[0.98]"
         >
           <div className="flex flex-col">
@@ -129,7 +133,10 @@ const RecentSearchTab = ({ setIsSearchChartOpen, setInpValue }: RecentSearchTabP
       {history.length > 4 && (
         <div className="text-center mt-2">
           <button
-            onClick={() => setIsSearchChartOpen(true)}
+            onClick={() => {setIsSearchChartOpen(true)
+              handleMobileSidebarClose()
+            }
+            }
             className="text-sm outline-none font-medium px-5 py-2 rounded-full bg-clip-text text-transparent bg-gradient-to-r from-[#3F1562] to-[#DF6789] border border-transparent hover:border-[#DF6789] transition-all duration-300 cursor-default"
           >
             View More

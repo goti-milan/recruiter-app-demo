@@ -21,7 +21,7 @@ const HeadScore: React.FC<HeadScoreProps> = ({ value = 0, size = 130 }) => {
     const dashOffset = pathLength - (progress * pathLength) / 100;
 
     return (
-        <div className="relative" style={{ width: size, height: 100 / 2 + 20 }}>
+        <div className="relative head-score" style={{ width: size, height: 100 / 2 + 20 }}>
             <svg viewBox="10 0 90 60">
                 <defs>
                     <linearGradient

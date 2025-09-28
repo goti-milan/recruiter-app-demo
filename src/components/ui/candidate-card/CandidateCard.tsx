@@ -366,7 +366,7 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: animationDelay }}
-      className="w-full flex-1 min-w-[348px] max-h-[275px]"
+      className="w-full flex-1 min-w-[348px] max-h-[275px] card-view"
       style={{ maxWidth: `${maxWidth}px` }}
     >
       <div

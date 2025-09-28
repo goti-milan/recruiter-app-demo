@@ -15,11 +15,10 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
-import ColoredLogo from "/src/assets/svg/saral-ai/logo/LogoColor.webp";
+import ColoredLogo from "/src/assets/images/main/saral-recruiter-logo.webp";
 import LinkdinCampaign from "@/assets/svg/saral-ai/linkdin-campaign/LinkdinCampaign";
 import SavedProfiles from "@/assets/svg/saral-ai/saved-profiles/SavedProfiles";
 import NewChat from "@/assets/svg/saral-ai/new-chat/NewChat";
-import SearchBar from "@/assets/svg/saral-ai/search-bar/SearchBar";
 import SendPrompt from "@/assets/svg/saral-ai/send-prompt/SendPrompt";
 import Rephrase from "@/assets/svg/saral-ai/rephrase/Rephrase";
 import Support from "@/assets/svg/saral-ai/support/Support";
@@ -43,6 +42,7 @@ import SaralLoader from "@/components/ui/loader/SaralLoader";
 import { getAuthorizedUserId } from "@/helpers/authorization";
 import SearchChartModal from "@/components/ui/saral-ai-popup/search-chat/SearchChat";
 import PremiumSvg from "@/assets/svg/saral-ai/premium-svg/PremiumSvg";
+import RecentSearch from "@/assets/svg/saral-ai/recent-search/RecentSearch";
 
 interface CandidateData {
   id: number;
@@ -254,6 +254,12 @@ export default function SaralPromptScreen() {
     }
   };
 
+  const handleMobileSidebarClose = () => {
+    if (window.innerWidth < 1024) {
+      setIsOpen(false);
+    }
+  };
+
   const handleOnClick = async () => {
     if (inpValue !== "" && inpValue) {
       fetchProfiles(inpValue, 1);
@@ -328,7 +334,7 @@ export default function SaralPromptScreen() {
       {!isOpen && (
         <button
           onClick={handleToggleSidebar}
-          className="lg:hidden fixed top-5.5 left-4 z-50 text-[#3F1562] rounded-xl w-10 h-10 flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all duration-200"
+          className="lg:hidden fixed top-5.5 left-4 z-999 text-[#3F1562] rounded-xl w-10 h-10 flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all duration-200"
         >
           <ToggleSVG />
         </button>
@@ -359,6 +365,7 @@ export default function SaralPromptScreen() {
           border-r-[2px] border-[#F7EEFF] p-6 
           flex flex-col justify-between h-screen z-40 
           transition-all duration-300 ease-in-out
+          z-99
           ${
             // Mobile behavior
             isOpen
@@ -382,7 +389,7 @@ export default function SaralPromptScreen() {
           >
             {/* Left: Image */}
             <button
-              className="p-2 rounded-xl w-[40px] h-[40px] bg-white/80 hover:bg-pink-50 border border-pink-200 flex items-center justify-center shrink-0"
+              className="rounded-xl w-[32px] h-[32px] bg-white/80 hover:bg-pink-50 border border-pink-200 flex items-center justify-center shrink-0"
               onClick={sidebarCollapsed ? handleToggleSidebar : undefined}
             >
               <img
@@ -427,6 +434,7 @@ export default function SaralPromptScreen() {
                 setResults(null);
                 setAllResults([]);
                 setInpValue(null);
+                handleMobileSidebarClose();
               }}
             >
               {/* New Chat icon */}
@@ -444,7 +452,10 @@ export default function SaralPromptScreen() {
               } text-[#2d1b4a] gap-2 py-2 px-2 hover:bg-[#a490b5d6] rounded-lg transition font-medium ${
                 sidebarCollapsed ? "lg:justify-center lg:px-0" : ""
               }`}
-              onClick={() => navigate(SARAL_AI_SAVED_CAMPAIGNS)}
+              onClick={() => {
+                navigate(SARAL_AI_SAVED_CAMPAIGNS);
+                handleMobileSidebarClose();
+              }}
             >
               {/* Saved Profiles icon */}
               <SavedProfiles />
@@ -470,7 +481,10 @@ export default function SaralPromptScreen() {
               } gap-2 py-2 px-2 hover:bg-[#a490b5d6] rounded-lg transition font-medium ${
                 sidebarCollapsed ? "lg:justify-center lg:px-0" : ""
               }`}
-              onClick={() => navigate(SARAL_AI_LINKEDIN_CAMPAIGN)}
+              onClick={() => {
+                navigate(SARAL_AI_LINKEDIN_CAMPAIGN);
+                handleMobileSidebarClose();
+              }}
             >
               {/* LinkedIn Campaign icon */}
               <LinkdinCampaign />
@@ -478,6 +492,19 @@ export default function SaralPromptScreen() {
                 LinkedIn Outreach
               </span>
             </button>
+
+            {sidebarCollapsed ? (
+              <button
+                className={`flex items-center -2 py-2 px-2 mt-12 hover:bg-[#a490b5d6] rounded-lg transition font-medium ${
+                  sidebarCollapsed ? "lg:justify-center lg:px-0" : ""
+                }`}
+                onClick={() => setIsSearchChartOpen(true)}
+              >
+                <RecentSearch />
+              </button>
+            ) : (
+              ""
+            )}
           </div>
 
           {/* Recent Searches - hide when collapsed */}
@@ -485,19 +512,20 @@ export default function SaralPromptScreen() {
             <RecentSearchTab
               setIsSearchChartOpen={setIsSearchChartOpen}
               setInpValue={setInpValue}
+              handleMobileSidebarClose={() => handleMobileSidebarClose()}
             />
           </div>
         </div>
 
         {/* Plan/Credits - show minimal version when collapsed */}
         <div
-          className={`h-42 flex flex-col justify-end ${
+          className={`h-42 flex flex-col justify-end mobile-size ${
             sidebarCollapsed ? "border-t-[2.5px] border-[#3F1562]" : ""
           }`}
         >
           {/* Credits section */}
           <div
-            className={`flex items-center justify-between mb-3 text-[#6b54a3] text-sm h-[30px] px-3 rounded-lg transition-all duration-200 font-medium hover:bg-[rgba(107,84,163,0.05)] cursor-pointer ${
+            className={`flex items-center justify-between mb-3 text-[#6b54a3] text-sm h-[45px] px-3 rounded-lg transition-all duration-200 font-medium hover:bg-[rgba(107,84,163,0.05)] cursor-pointer ${
               sidebarCollapsed ? "lg:justify-center lg:px-1" : ""
             }`}
           >
@@ -523,7 +551,10 @@ export default function SaralPromptScreen() {
               } rounded-xl outline-none bg-[#3F1562] text-white py-2 font-semibold hover:text-[#3F1562] transition ${
                 sidebarCollapsed ? "lg:text-xs lg:py-1" : ""
               }`}
-              onClick={() => setIsPricingOpen(true)}
+              onClick={() => {
+                setIsPricingOpen(true);
+                handleMobileSidebarClose();
+              }}
             >
               <span className={`${sidebarCollapsed ? "lg:hidden" : ""}`}>
                 Upgrade Plan
@@ -543,7 +574,10 @@ export default function SaralPromptScreen() {
             className={`w-full rounded-xl outline-none py-2 mt-2 flex items-center justify-center gap-2 text-[#3F1462] text-base font-semibold hover:bg-white/20 transition ${
               sidebarCollapsed ? "lg:px-1" : ""
             }`}
-            onClick={() => setIsSupportModal(true)}
+            onClick={() => {
+              setIsSupportModal(true);
+              handleMobileSidebarClose();
+            }}
           >
             <Support />
             <span className={`${sidebarCollapsed ? "lg:hidden" : ""}`}>
@@ -558,32 +592,31 @@ export default function SaralPromptScreen() {
           sidebarCollapsed ? "lg:ml-0" : ""
         }`}
       >
-     <div className="sticky top-0 z-50 flex items-center justify-end px-4 sm:px-6 lg:px-8 py-3 bg-[#f9f1ff]">
-  {/* Info Icon */}
-  <button
-    className="group flex outline-none items-center bg-purple-50 justify-center mx-2 w-[30px] h-[30px] hover:bg-purple-100 rounded-xl transition-all duration-200 active:scale-95"
-    onClick={() => setIsInfoOpen(true)}
-  >
-    <InfoIcon />
-  </button>
+        <div className="sticky top-0 h-[74px] z-50 flex items-center justify-end px-4 sm:px-6 lg:px-8 py-3">
+          {/* Info Icon */}
+          <button
+            className="group flex outline-none items-center bg-purple-50 justify-center mx-2 w-[30px] h-[30px] hover:bg-purple-100 rounded-xl transition-all duration-200 active:scale-95"
+            onClick={() => setIsInfoOpen(true)}
+          >
+            <InfoIcon />
+          </button>
 
-  {/* Home Section */}
-  <button
-    onClick={() => navigate(DASHBOARD)}
-    className="group flex items-center space-x-2 sm:space-x-3 px-2 sm:px-3 py-1.5 bg-purple-50 hover:bg-purple-100 rounded-xl transition-all duration-200 active:scale-95"
-  >
-    <Homeicon />
-    <span className="text-[#3F1562] font-bold group-hover:text-purple-800 text-sm sm:text-base">
-      Home
-    </span>
-  </button>
-</div>
-
+          {/* Home Section */}
+          <button
+            onClick={() => navigate(DASHBOARD)}
+            className="group flex items-center space-x-2 sm:space-x-3 px-2 sm:px-3 py-1.5 bg-purple-50 hover:bg-purple-100 rounded-xl transition-all duration-200 active:scale-95"
+          >
+            <Homeicon />
+            <span className="text-[#3F1562] font-bold group-hover:text-purple-800 text-sm sm:text-base">
+              Home
+            </span>
+          </button>
+        </div>
 
         {/* Centered content area */}
         {!isLinkedinCampaign && !isSaved && (
           <div
-            className={`flex-1 flex flex-col w-full items-center px-4 sm:px-6 lg:px-8 ${
+            className={`flex-1 flex flex-col w-full mt-[20px] items-center px-4 sm:px-6 lg:px-8 ${
               results?.data &&
               (results.type === "history"
                 ? results.data.data
@@ -614,7 +647,7 @@ export default function SaralPromptScreen() {
                 results || isResult || SkeletonLoading
                   ? "max-w-7xl"
                   : "max-w-3xl"
-              } flex flex-col items-center gap-3 sm:gap-4`}
+              } flex flex-col items-center sm:gap-4`}
             >
               {/* Input field */}
               <motion.div
@@ -632,10 +665,11 @@ export default function SaralPromptScreen() {
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 className="w-full"
               >
+                {/* Prompt Box - Removed sticky positioning for mobile scroll */}
                 <div
-                  className={`lg:sticky top-30 lg:mb-8 ${
+                  className={`mb-4 ${
                     sidebarCollapsed ? "z-50" : "z-0"
-                  } w-[full] flex flex-col sm:flex-row items-stretch sm:items-center bg-white/80 border border-[#DF6789] rounded-full p-3 sm:p-4 shadow-sm gap-2 sm:gap-0`}
+                  } w-full flex flex-row items-center bg-white/80 border border-[#DF6789] rounded-full p-2 sm:p-4 shadow-sm gap-2`}
                 >
                   {/* Animated Input with AnimatePresence */}
                   <AnimatePresence mode="wait">
@@ -645,7 +679,7 @@ export default function SaralPromptScreen() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -5 }}
                       transition={{ duration: 0.3 }}
-                      className="flex-1 min-w-0 bg-transparent outline-none text-base sm:text-lg  placeholder-[#A6A6A6] truncate"
+                      className="flex-1 min-w-0 bg-transparent outline-none text-sm sm:text-lg placeholder-[#A6A6A6] truncate px-2"
                       placeholder="when an unknown printer took a galley of type and scrambled."
                       autoFocus
                       ref={inputRef}
@@ -656,11 +690,11 @@ export default function SaralPromptScreen() {
                     />
                   </AnimatePresence>
 
-                  <div className="flex items-center gap-2 justify-end">
+                  <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
                     {/* Rephrase Button with rotation animation */}
                     <motion.button
                       whileTap={{ scale: 0.9 }}
-                      className="rounded-xl text-[#3D1562] opacity-70 px-3 sm:px-4 py-2 font-semibold hover:bg-[#ead1f7] transition text-xs sm:text-sm flex items-center gap-2 disabled:opacity-50 disabled:!cursor-not-allowed"
+                      className="rounded-xl text-[#3D1562] opacity-70 px-2 sm:px-4 py-2 font-semibold hover:bg-[#ead1f7] transition text-xs flex items-center gap-1 disabled:opacity-50 disabled:!cursor-not-allowed"
                       onClick={handleEnhanceSearch}
                       disabled={
                         !inpValue || inpValue.trim() === "" || isRephrasing
@@ -676,7 +710,7 @@ export default function SaralPromptScreen() {
                       >
                         <Rephrase />
                       </motion.div>
-                      Rephrase
+                      <span className="hidden sm:inline">Rephrase</span>
                     </motion.button>
 
                     {/* Search Button */}
@@ -687,17 +721,16 @@ export default function SaralPromptScreen() {
                       disabled={
                         !inpValue || inpValue.trim() === "" || isRephrasing
                       }
-                      className="rounded-2xl p-2.5 sm:p-3 from-[#de7fdf] to-[#a881fa] hover:scale-105 transition shadow-md disabled:opacity-50 disabled:!cursor-not-allowed"
+                      className="rounded-2xl p-2 sm:p-3 from-[#de7fdf] to-[#a881fa] hover:scale-105 transition shadow-md disabled:opacity-50 disabled:!cursor-not-allowed flex-shrink-0"
                     >
                       {isSending ? <SaralLoader /> : <SendPrompt />}
                     </motion.button>
                   </div>
-                  
                 </div>
-
                 {/* Set result cards */}
-                <div className="max-h-[67vh] mt-2 overflow-y-auto   ">
-                  <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6 justify-items-center mx-2 mt-4">
+                <div className="max-h-[70vh] overflow-y-auto">
+                  <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6 justify-items-center mx-2 grid-1335-2 grid-1280-1320-2 grid-640-713-1">
+                    {/* ... rest of your card content remains the same ... */}
                     {SkeletonLoading
                       ? Array.from({ length: 6 }).map((_, index) => (
                           <div
@@ -795,6 +828,7 @@ export default function SaralPromptScreen() {
                       </div>
                     )}
                 </div>
+                   
               </motion.div>
 
               {isHandleError && (
@@ -862,7 +896,11 @@ export default function SaralPromptScreen() {
                     ))}
                   </div>
                 ) : (
-                  <div className={`h-[70vh] ${sidebarCollapsed ? 'w-[90vw]' : 'w-[75vw]'} flex items-center justify-center`}>
+                  <div
+                    className={`h-[70vh] ${
+                      sidebarCollapsed ? "w-[90vw]" : "w-[75vw]"
+                    } flex items-center justify-center`}
+                  >
                     <p>No selected candidate</p>
                   </div>
                 )}

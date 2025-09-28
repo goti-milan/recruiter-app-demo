@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
 import UpdateEditorSvg from "../../../assets/svg/saral-ai/update-editor/updateEditor";
 import SendLinkdinSvg from "@/assets/svg/saral-ai/send-linkdin/SendLinkdinSvg";
+import { Link, useNavigate } from "react-router";
 
 interface RichTextEditorProps {
   candidate: any;
@@ -26,6 +27,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [copied, setCopied] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const navigate = useNavigate()
 
   const initialContent = `  <p>Hi ${candidate.name},</p>
 
@@ -283,17 +285,15 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
       {/* Custom Toolbar */}
       <div
-        className={`flex items-center justify-between px-6 py-4 border-t mx-8 rounded-t-xl border-gray-100 ${
-          isEditMode ? "bg-[#7517cc1f]" : "bg-[#fffdfd]"
-        }`}
+        className={`flex items-center justify-between px-6 py-4 border-t mx-8 rounded-t-xl border-gray-100 ${isEditMode ? "bg-[#7517cc1f]" : "bg-[#fffdfd]"
+          }`}
       >
         <div className="flex items-center space-x-4">
           {/* Undo/Redo */}
           <div className="flex items-center space-x-1">
             <button
-              className={`p-1 hover:bg-gray-100 rounded transition-colors duration-150 ${
-                historyIndex <= 0 ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+              className={`p-1 hover:bg-gray-100 rounded transition-colors duration-150 ${historyIndex <= 0 ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               title="Undo"
               onClick={handleUndo}
               disabled={historyIndex <= 0}
@@ -312,11 +312,10 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               </svg>
             </button>
             <button
-              className={`p-1 hover:bg-gray-100 rounded transition-colors duration-150 ${
-                historyIndex >= history.length - 1
-                  ? "opacity-50 cursor-not-allowed"
-                  : ""
-              }`}
+              className={`p-1 hover:bg-gray-100 rounded transition-colors duration-150 ${historyIndex >= history.length - 1
+                ? "opacity-50 cursor-not-allowed"
+                : ""
+                }`}
               title="Redo"
               onClick={handleRedo}
               disabled={historyIndex >= history.length - 1}
@@ -342,11 +341,10 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           {/* Text Formatting */}
           <div className="flex items-center space-x-1">
             <button
-              className={`px-2 py-1 hover:bg-gray-100 rounded transition-colors duration-150 font-bold text-lg ${
-                isFormatActive("bold")
-                  ? "bg-gray-200 text-gray-900"
-                  : "text-gray-700"
-              }`}
+              className={`px-2 py-1 hover:bg-gray-100 rounded transition-colors duration-150 font-bold text-lg ${isFormatActive("bold")
+                ? "bg-gray-200 text-gray-900"
+                : "text-gray-700"
+                }`}
               title="Bold"
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => handleCommand("bold")}
@@ -354,9 +352,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               B
             </button>
             <button
-              className={`px-2 py-1 hover:bg-gray-100 rounded transition-colors duration-150 italic text-lg ${
-                isFormatActive("italic") ? "bg-gray-200" : "text-gray-700"
-              }`}
+              className={`px-2 py-1 hover:bg-gray-100 rounded transition-colors duration-150 italic text-lg ${isFormatActive("italic") ? "bg-gray-200" : "text-gray-700"
+                }`}
               title="Italic"
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => handleCommand("italic")}
@@ -364,9 +361,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               I
             </button>
             <button
-              className={`px-2 py-1 hover:bg-gray-100 rounded transition-colors duration-150 underline text-lg ${
-                isFormatActive("underline") ? "bg-gray-200" : "text-gray-700"
-              }`}
+              className={`px-2 py-1 hover:bg-gray-100 rounded transition-colors duration-150 underline text-lg ${isFormatActive("underline") ? "bg-gray-200" : "text-gray-700"
+                }`}
               title="Underline"
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => handleCommand("underline")}
@@ -379,9 +375,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         {/* Lists */}
         <div className="flex items-center space-x-1">
           <button
-            className={`p-1 hover:bg-gray-100 rounded transition-colors duration-150 ${
-              isListActive("ul") ? "bg-gray-200" : ""
-            }`}
+            className={`p-1 hover:bg-gray-100 rounded transition-colors duration-150 ${isListActive("ul") ? "bg-gray-200" : ""
+              }`}
             title="Bullet List (Ctrl+L)"
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => handleCommand("insertUnorderedList")}
@@ -408,9 +403,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             </svg>
           </button>
           <button
-            className={`p-1 hover:bg-gray-100 rounded transition-colors duration-150 ${
-              isListActive("ol") ? "bg-gray-200" : ""
-            }`}
+            className={`p-1 hover:bg-gray-100 rounded transition-colors duration-150 ${isListActive("ol") ? "bg-gray-200" : ""
+              }`}
             title="Numbered List (Ctrl+O)"
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => handleCommand("insertOrderedList")}
@@ -433,9 +427,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
       {/* Editor */}
       <div
-        className={`relative ${
-          isEditMode ? "bg-[#7517cc1f]" : "bg-[#fffdfd]"
-        } mx-8`}
+        className={`relative ${isEditMode ? "bg-[#7517cc1f]" : "bg-[#fffdfd]"
+          } mx-8`}
       >
         <div
           ref={editorRef}
@@ -449,9 +442,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
       {/* Footer */}
       <div
-        className={`flex items-center justify-end space-x-3 px-6 py-4 rounded-b-xl border-t border-gray-100 mx-8 mb-8   ${
-          isEditMode ? "bg-[#7517cc1f]" : "bg-[#fffdfd]"
-        }`}
+        className={`flex items-center justify-end space-x-3 px-6 py-4 rounded-b-xl border-t border-gray-100 mx-8 mb-8   ${isEditMode ? "bg-[#7517cc1f]" : "bg-[#fffdfd]"
+          }`}
       >
         {isEditMode ? (
           <>
@@ -471,7 +463,16 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         ) : (
           <>
             <UpdateEditorSvg onClick={() => setIsEditMode(true)} />
-            <SendLinkdinSvg />
+            <button
+              onClick={()=> copied && window.open(candidate.linkedin_url, "_blank")}
+              className={`flex items-center transition ${!copied ? "opacity-50 cursor-not-allowed" : "opacity-100"
+                }`}
+              title={
+                copied ? "Go to LinkedIn Profile" : "copy first to go to linkedin"
+              }
+            >
+              <SendLinkdinSvg />
+            </button>
           </>
         )}
       </div>

@@ -573,7 +573,7 @@ export default function SaralPromptScreen() {
     className="group flex items-center space-x-2 sm:space-x-3 px-2 sm:px-3 py-1.5 bg-purple-50 hover:bg-purple-100 rounded-xl transition-all duration-200 active:scale-95"
   >
     <Homeicon />
-    <span className="text-[#3F1562] font-medium group-hover:text-purple-800 text-sm sm:text-base">
+    <span className="text-[#3F1562] font-bold group-hover:text-purple-800 text-sm sm:text-base">
       Home
     </span>
   </button>

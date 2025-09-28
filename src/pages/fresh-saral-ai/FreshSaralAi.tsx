@@ -145,7 +145,8 @@ export function PromptScreen() {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleSearch}
-              className="p-2 rounded-xl w-[40px] h-[40px] bg-white/80 hover:bg-pink-50 border border-pink-200 flex items-center justify-center shrink-0"
+              disabled={!inputValue.trim() || resultLoading}
+              className="p-2 rounded-xl w-[40px] h-[40px] bg-white/80 hover:bg-pink-50 border border-pink-200 flex items-center justify-center shrink-0 disabled:!cursor-not-allowed disabled:opacity-50"
             >
 
               {resultLoading ? <span className="text-[#3D1562]"><SaralLoader /></span> :  <img

@@ -1,7 +1,6 @@
 import React, { useCallback, useRef, useState } from "react";
 import UpdateEditorSvg from "../../../assets/svg/saral-ai/update-editor/updateEditor";
 import SendLinkdinSvg from "@/assets/svg/saral-ai/send-linkdin/SendLinkdinSvg";
-import { Link, useNavigate } from "react-router";
 
 interface RichTextEditorProps {
   candidate: any;
@@ -18,16 +17,12 @@ interface RichTextEditorProps {
 
 const RichTextEditor: React.FC<RichTextEditorProps> = ({
   candidate,
-  candidate_name = "candidate_name",
-  experience = "experience",
-  skills = "skills",
 }) => {
   const editorRef = useRef<HTMLDivElement>(null);
   const [history, setHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [copied, setCopied] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  const navigate = useNavigate()
 
   const initialContent = `  <p>Hi ${candidate.name},</p>
 

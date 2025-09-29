@@ -1,7 +1,6 @@
 import React from 'react'
 
 const Star: React.FC<React.SVGProps<SVGElement>> = ({ color }) => {
-    console.log('color', color)
     return (
     <svg
         width="27"

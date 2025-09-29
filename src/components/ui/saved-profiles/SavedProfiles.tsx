@@ -102,7 +102,6 @@ const SavedProfilesTab: React.FC<SavedProfilesTabProps> = ({
       );
       setSavedProfileCount(response.total);
 
-      console.log("Delete response:", res.message);
     } catch (err: any) {
       console.error("Error deleting profile:", err);
     } finally {

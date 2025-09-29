@@ -1,13 +1,18 @@
-
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Star from "@/assets/svg/saral-ai/Star";
 import ColoredLogo from "/src/assets/svg/saral-ai/logo/LogoColor.webp";
-import { enhancePrompt, searchProfiles, SearchProfilesResponse } from "@/helpers/apis/saral-ai";
+import {
+  enhancePrompt,
+  getSearchHistory,
+  searchProfiles,
+  SearchProfilesResponse,
+} from "@/helpers/apis/saral-ai";
 import { useNavigate } from "react-router";
 import { LOGIN, SARAL_AI_RESULT } from "@/routes";
 import SaralLoader from "@/components/ui/loader/SaralLoader";
 import { getAuthorizedUserId } from "@/helpers/authorization";
+import { SaralInfoModal } from "@/components/ui/saral-ai-popup/info-modal/InfoModal";
 
 export function PromptScreen() {
   const [inputValue, setInputValue] = useState("");
@@ -15,24 +20,45 @@ export function PromptScreen() {
   const [resultLoading, setResultLoading] = useState(false);
   const [animatingText, setAnimatingText] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [isFirstTime, setIsFirstTime] = useState(false);
   const navigate = useNavigate();
 
-   const [authorizedUserId, setAutorizedUserId] = useState<string>('')
-  
-      useEffect(() => {
-      const userId = getAuthorizedUserId();
-      if (!userId) {
-        navigate(LOGIN);
-      }
-      setAutorizedUserId(userId ?? '')
-    }, []);
+  const [authorizedUserId, setAutorizedUserId] = useState<string>("");
 
+  useEffect(() => {
+    const userId = getAuthorizedUserId();
+    if (!userId) {
+      navigate(LOGIN);
+    }
+    setAutorizedUserId(userId ?? "");
+  }, []);
+
+  const fetchHistory = async () => {
+    try {
+      const res = await getSearchHistory(authorizedUserId, 1, 10);
+      if (res?.total === 0) {
+        setIsFirstTime(true);
+      }
+    } catch (error) {
+      console.error("Error fetching search history:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchHistory();
+  }, [authorizedUserId]);
 
   const fetchProfiles = async (query: string, page: number = 1) => {
     try {
       setResultLoading(true);
       setIsError(false);
-      const response: SearchProfilesResponse = await searchProfiles(authorizedUserId,query, page);
+      const response: SearchProfilesResponse = await searchProfiles(
+        authorizedUserId,
+        query,
+        page
+      );
 
       if (response.success) {
         navigate(SARAL_AI_RESULT, {
@@ -50,14 +76,14 @@ export function PromptScreen() {
   };
 
   const handleSearch = async () => {
-      fetchProfiles(inputValue);
+    fetchProfiles(inputValue);
   };
 
   const handleEnhanceSearch = async () => {
     if (inputValue.trim() !== "") {
       try {
         setLoading(true);
-        const response = await enhancePrompt(authorizedUserId,inputValue);
+        const response = await enhancePrompt(authorizedUserId, inputValue);
 
         if (response.success) {
           // Animate text change
@@ -124,11 +150,7 @@ export function PromptScreen() {
               disabled={!inputValue.trim() || loading}
             >
               <motion.div
-                animate={
-                  loading
-                    ? { rotate: 360 }
-                    : { rotate: 0 }
-                }
+                animate={loading ? { rotate: 360 } : { rotate: 0 }}
                 transition={
                   loading
                     ? { repeat: Infinity, duration: 3, ease: "linear" }
@@ -137,7 +159,7 @@ export function PromptScreen() {
               >
                 <Star className="w-4 h-4 sm:w-5 sm:h-5" />
               </motion.div>
-               <span className="hidden sm:inline">Rephrase</span>
+              <span className="hidden sm:inline">Rephrase</span>
             </motion.button>
 
             {/* Search Button */}
@@ -148,36 +170,43 @@ export function PromptScreen() {
               disabled={!inputValue.trim() || resultLoading}
               className="p-2 rounded-xl w-[40px] h-[40px] bg-white/80 hover:bg-pink-50 border border-pink-200 flex items-center justify-center shrink-0 disabled:!cursor-not-allowed disabled:opacity-50"
             >
-
-              {resultLoading ? <span className="text-[#3D1562]"><SaralLoader /></span> :  <img
-                src={ColoredLogo}
-                alt="coloredLogo"
-                className="aspect-square w-full"
-              />}
-             
+              {resultLoading ? (
+                <span className="text-[#3D1562]">
+                  <SaralLoader />
+                </span>
+              ) : (
+                <img
+                  src={ColoredLogo}
+                  alt="coloredLogo"
+                  className="aspect-square w-full"
+                />
+              )}
             </motion.button>
-
           </div>
         </div>
-             {isError && (
-                <AnimatePresence>
-                  <motion.div
-                    key="error-box"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="text-center py-8 px-4"
-                  >
-                    <p className="text-[#3D1562] font-semibold text-lg sm:text-xl mb-2">
-                      We couldn't find any results.
-                    </p>
-                    <p className="text-[#3D1562] text-sm sm:text-base">
-                      Try again using another prompt.
-                    </p>
-                  </motion.div>
-                </AnimatePresence>
-              )}
+        {isError && (
+          <AnimatePresence>
+            <motion.div
+              key="error-box"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="text-center py-8 px-4"
+            >
+              <p className="text-[#3D1562] font-semibold text-lg sm:text-xl mb-2">
+                We couldn't find any results.
+              </p>
+              <p className="text-[#3D1562] text-sm sm:text-base">
+                Try again using another prompt.
+              </p>
+            </motion.div>
+          </AnimatePresence>
+        )}
+        <SaralInfoModal
+          isOpen={isFirstTime}
+          onClose={() => setIsFirstTime(false)}
+        />
       </div>
 
       {/* Footer */}

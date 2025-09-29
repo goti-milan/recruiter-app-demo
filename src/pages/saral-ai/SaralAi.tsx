@@ -43,6 +43,10 @@ import { getAuthorizedUserId } from "@/helpers/authorization";
 import SearchChartModal from "@/components/ui/saral-ai-popup/search-chat/SearchChat";
 import PremiumSvg from "@/assets/svg/saral-ai/premium-svg/PremiumSvg";
 import RecentSearch from "@/assets/svg/saral-ai/recent-search/RecentSearch";
+import { GoHome } from "react-icons/go";
+import { GrStatusInfo } from "react-icons/gr";
+import { FiSidebar } from "react-icons/fi";
+import { BiEdit } from "react-icons/bi";
 
 interface CandidateData {
   id: number;
@@ -401,20 +405,22 @@ export default function SaralPromptScreen() {
 
             {/* Right: Toggle SVG Icon - Only show on desktop when sidebar is open */}
             <div
-              className={`text-[deepViolet] rounded-xl w-10 h-10 flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all duration-200 ${
+              className={`text-[#3F1562] rounded-xl flex items-center justify-center cursor-pointer hover:bg-[#a490b5d6] transition-all duration-200 ${
                 sidebarCollapsed ? "lg:hidden" : "lg:block"
               } hidden`}
               onClick={handleToggleSidebar}
             >
-              <ToggleSVG />
+              {/* <ToggleSVG /> */}
+              <FiSidebar className="text-4xl p-0.5 " />
             </div>
 
             {/* Mobile: Toggle button on right side when sidebar is open */}
             <div
-              className="text-[deepViolet] rounded-xl w-10 h-10 flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all duration-200 lg:hidden block"
+              className="text-[#3F1562] rounded-xl  flex items-center justify-center cursor-pointer hover:bg-[#a490b5d6] transition-all duration-200 lg:hidden block"
               onClick={handleToggleSidebar}
             >
-              <ToggleSVG />
+              {/* <ToggleSVG /> */}
+              <FiSidebar className="text-4xl p-0.5 " />
             </div>
           </div>
 
@@ -423,7 +429,7 @@ export default function SaralPromptScreen() {
             <button
               className={`flex items-center ${
                 lastPath === "new"
-                  ? "bg-[#f9f1ffbd] border-2 border-[#684e91] text-[#886F9D]"
+                  ? "bg-[#f9f1ffbd] border-2 border-[#684e91] text-[#3F1562]"
                   : ""
               } text-[#2d1b4a] gap-2 py-2 px-2 hover:bg-[#a490b5d6] rounded-lg transition font-medium ${
                 sidebarCollapsed ? "lg:justify-center lg:px-0" : ""
@@ -438,7 +444,8 @@ export default function SaralPromptScreen() {
               }}
             >
               {/* New Chat icon */}
-              <NewChat />
+              {/* <NewChat /> */}
+              <BiEdit  className="text-2xl"/>
               <span className={`${sidebarCollapsed ? "lg:hidden" : ""}`}>
                 New Chat
               </span>
@@ -447,7 +454,7 @@ export default function SaralPromptScreen() {
             <button
               className={`flex items-center ${
                 lastPath === "saved-campaigns"
-                  ? "bg-[#f9f1ffbd] border-2 border-[#684e91] text-[#886F9D]"
+                  ? "bg-[#f9f1ffbd] border-2 border-[#684e91] text-[#3F1562]"
                   : ""
               } text-[#2d1b4a] gap-2 py-2 px-2 hover:bg-[#a490b5d6] rounded-lg transition font-medium ${
                 sidebarCollapsed ? "lg:justify-center lg:px-0" : ""
@@ -476,7 +483,7 @@ export default function SaralPromptScreen() {
             <button
               className={`flex items-center ${
                 lastPath === "linkdin-campaign"
-                  ? " bg-[#f9f1ffbd] border-2 border-[#684e91] text-[#886F9D]"
+                  ? " bg-[#f9f1ffbd] border-2 border-[#684e91] text-[#3F1562]"
                   : "text-[#2d1b4a]"
               } gap-2 py-2 px-2 hover:bg-[#a490b5d6] rounded-lg transition font-medium ${
                 sidebarCollapsed ? "lg:justify-center lg:px-0" : ""
@@ -525,7 +532,7 @@ export default function SaralPromptScreen() {
         >
           {/* Credits section */}
           <div
-            className={`flex items-center justify-between mb-3 text-[#6b54a3] text-sm h-[45px] px-3 rounded-lg transition-all duration-200 font-medium hover:bg-[rgba(107,84,163,0.05)] cursor-pointer ${
+            className={`flex items-center justify-between mb-3 text-[#3F1562] text-sm h-[45px] px-3 rounded-lg transition-all duration-200 font-medium hover:bg-[#a490b5d6] cursor-pointer ${
               sidebarCollapsed ? "lg:justify-center lg:px-1" : ""
             }`}
           >
@@ -533,7 +540,7 @@ export default function SaralPromptScreen() {
               Credits
             </span>
             <span
-              className={`font-bold text-[#4a3761] ${
+              className={`font-bold text-[#3F1562] ${
                 sidebarCollapsed ? "lg:text-xs" : ""
               }`}
             >
@@ -595,19 +602,21 @@ export default function SaralPromptScreen() {
         <div className="sticky top-0 h-[74px] z-50 flex items-center justify-end px-4 sm:px-6 lg:px-8 py-3">
           {/* Info Icon */}
           <button
-            className="group flex outline-none items-center bg-purple-50 justify-center mx-2 w-[30px] h-[30px] hover:bg-purple-100 rounded-xl transition-all duration-200 active:scale-95"
+            className="group flex outline-none items-center bg-purple-50 justify-center mx-2 w-[30px] h-[30px] hover:bg-[#a490b5d6] rounded-md transition-all duration-200 active:scale-95"
             onClick={() => setIsInfoOpen(true)}
           >
-            <InfoIcon />
+            {/* <InfoIcon /> */}
+            <GrStatusInfo className="text-[#3F1562] text-xl text-bold" strokeWidth={0.5} />
           </button>
 
           {/* Home Section */}
           <button
             onClick={() => navigate(DASHBOARD)}
-            className="group flex items-center space-x-2 sm:space-x-3 px-2 sm:px-3 py-1.5 bg-purple-50 hover:bg-purple-100 rounded-xl transition-all duration-200 active:scale-95"
+            className="group flex items-center h-[30px] space-x-1 sm:space-x-3 px-2 sm:px-3 py-1.5 bg-purple-50 hover:bg-[#a490b5d6] rounded-xl transition-all duration-200 active:scale-95"
           >
-            <Homeicon />
-            <span className="text-[#3F1562] font-bold group-hover:text-purple-800 text-sm sm:text-base">
+            {/* <Homeicon /> */}
+           <GoHome className="text-[#3F1562] text-2xl" strokeWidth={0.5} />
+            <span className="text-[#3F1562] font-bold text-sm sm:text-base">
               Home
             </span>
           </button>

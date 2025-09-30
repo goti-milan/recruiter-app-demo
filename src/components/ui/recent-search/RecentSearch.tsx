@@ -21,6 +21,7 @@ const RecentSearchTab = ({
   const [loading, setLoading] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true);
   const [authorizedUserId, setAutorizedUserId] = useState<string>("");
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
   useEffect(() => {
     const userId = getAuthorizedUserId();
@@ -30,17 +31,23 @@ const RecentSearchTab = ({
     setAutorizedUserId(userId ?? "");
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowHeight(window.innerHeight);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const navigate = useNavigate();
 
   const fetchHistory = useCallback(async () => {
     if (loading) return;
-
     setLoading(true);
-
     try {
       const res = await getSearchHistory(authorizedUserId, 1, 10);
       setHistory(res.data);
-
       if (initialLoad) {
         setInitialLoad(false);
       }
@@ -70,13 +77,24 @@ const RecentSearchTab = ({
 
   const handleHistoryClick = useCallback(
     (itemId: string, queryText: string) => {
-      setInpValue(queryText)
+      setInpValue(queryText);
       navigate(`/saral-ai/result/${itemId}/view`);
     },
     [navigate]
   );
 
+  const handleRecentSearchClick = useCallback(() => {
+    if (windowHeight < 753 && history.length > 0) {
+      setIsSearchChartOpen(true);
+      handleMobileSidebarClose();
+    }
+  }, [windowHeight, history.length, setIsSearchChartOpen, handleMobileSidebarClose]);
+
   const renderedItems = useMemo(() => {
+    if (windowHeight < 753) {
+      return null;
+    }
+
     return history.slice(0, 4).map((item) => {
       const { date, time } = formatDate(item.created_at);
       return (
@@ -84,7 +102,6 @@ const RecentSearchTab = ({
           key={item.id}
           onClick={() => {
             handleHistoryClick(item.id, item.query_text);
-
             handleMobileSidebarClose();
           }}
           className="flex justify-between items-center bg-white rounded-xl px-3 py-2 mb-2 shadow-sm border border-[#f0ebf8] cursor-pointer transition-all duration-200 hover:shadow-md hover:border-[#e1d6f2] hover:bg-[#fefefe] active:transform active:scale-[0.98]"
@@ -104,16 +121,19 @@ const RecentSearchTab = ({
         </div>
       );
     });
-  }, [history, formatDate, handleHistoryClick]);
+  }, [history, formatDate, handleHistoryClick, windowHeight]);
 
   if (initialLoad && loading) {
     return (
       <div className="bg-white/50 rounded-2xl h-2 border-[3px] border-white p-3 w-full mt-[15px] max-w-xs">
-        <h3 className="text-[#3F1562] tracking-wide font-semibold mb-2 flex items-center gap-2">
+        <h3 
+          className="text-[#3F1562] tracking-wide font-semibold mb-2 flex items-center gap-2 cursor-pointer"
+          onClick={handleRecentSearchClick}
+        >
           <RecentSearch />
           Recent Searches
         </h3>
-        <div className="border-t border-[#e9e4f3] mb-3" />
+        {/* <div className="border-t border-[#e9e4f3] mb-3" /> */}
         <div className="flex justify-center py-8">
           <ButtonLoader isVisible={loading} />
         </div>
@@ -123,31 +143,28 @@ const RecentSearchTab = ({
 
   return (
     <div className="bg-white/50 rounded-2xl xl:h-[360px] md:h-[347px] border-[3px] border-white p-3 w-full mt-[15px] max-w-xs">
-      <h3 className="text-[#3F1562] tracking-wide font-semibold mb-2 flex items-center gap-2">
+      <h3 
+        className="text-[#3F1562] tracking-wide font-semibold mb-2 flex items-center gap-2 cursor-pointer"
+        onClick={handleRecentSearchClick}
+      >
         <RecentSearch />
         Recent Searches
       </h3>
-
-      <div className="border-t border-[#e9e4f3] mb-3 overflow-y-auto" />
-
-      <div className="space-y-2">
-        {renderedItems}
-      </div>
-
-        {history.length > 4 && (
-          <div className="text-center mt-2">
-            <button
-            onClick={() => {setIsSearchChartOpen(true)
-              handleMobileSidebarClose()
-            }
-            }
-            className="text-sm outline-none font-medium px-5 py-2 rounded-full bg-clip-text text-transparent bg-gradient-to-r from-[#3F1562] to-[#DF6789] border border-transparent hover:border-[#DF6789] transition-all duration-300 cursor-default"
-            >
-              View More
-            </button>
-          </div>
-        )}
-
+      {windowHeight >= 753 && <div className="border-t border-[#e9e4f3] mb-3 overflow-y-auto" /> }
+      {windowHeight >= 753 && <div className="space-y-2">{renderedItems}</div>}
+      {windowHeight >= 753 && history.length > 4 && (
+        <div className="text-center mt-2">
+          <button
+            onClick={() => {
+              setIsSearchChartOpen(true);
+              handleMobileSidebarClose();
+            }}
+            className="text-sm outline-none font-medium px-5 py-2 rounded-full bg-clip-text text-transparent bg-gradient-to-r from-[#3F1562] to-[#DF6789] border border-transparent hover:border-[#DF6789] transition-all duration-300 cursor-pointer"
+          >
+            View More
+          </button>
+        </div>
+      )}
     </div>
   );
 };

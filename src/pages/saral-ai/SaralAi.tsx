@@ -338,9 +338,9 @@ export default function SaralPromptScreen() {
       {!isOpen && (
         <button
           onClick={handleToggleSidebar}
-          className="lg:hidden fixed top-5.5 left-4 z-999 text-[#3F1562] rounded-xl w-10 h-10 flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all duration-200"
+          className="lg:hidden fixed top-4.5 left-4 z-999 text-[#3F1562] rounded-xl w-10 h-10 flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all duration-200"
         >
-          <ToggleSVG />
+           <FiSidebar className="text-[#3F1562] text-2xl"  />
         </button>
       )}
 
@@ -405,13 +405,13 @@ export default function SaralPromptScreen() {
 
             {/* Right: Toggle SVG Icon - Only show on desktop when sidebar is open */}
             <div
-              className={`text-[#3F1562] rounded-xl flex items-center justify-center cursor-pointer hover:bg-[#a490b5d6] transition-all duration-200 ${
+              className={`text-[#3F1562] h-[30px] w-[30px] rounded-xl flex  items-center justify-center cursor-pointer  transition-all duration-200 ${
                 sidebarCollapsed ? "lg:hidden" : "lg:block"
               } hidden`}
               onClick={handleToggleSidebar}
             >
               {/* <ToggleSVG /> */}
-              <FiSidebar className="text-4xl p-0.5 " />
+              <FiSidebar className="text-[#3F1562] text-2xl"  />
             </div>
 
             {/* Mobile: Toggle button on right side when sidebar is open */}
@@ -420,7 +420,7 @@ export default function SaralPromptScreen() {
               onClick={handleToggleSidebar}
             >
               {/* <ToggleSVG /> */}
-              <FiSidebar className="text-4xl p-0.5 " />
+             <FiSidebar className="text-[#3F1562] text-2xl"  />
             </div>
           </div>
 
@@ -532,11 +532,11 @@ export default function SaralPromptScreen() {
         >
           {/* Credits section */}
           <div
-            className={`flex items-center justify-between mb-3 text-[#3F1562] text-sm h-[45px] px-3 rounded-lg transition-all duration-200 font-medium hover:bg-[#a490b5d6] cursor-pointer ${
+            className={`flex items-center bg-[#F5F5F5] justify-between mb-3 text-[#3F1562] text-sm h-[45px] px-3 rounded-lg transition-all duration-200 font-medium hover:bg-[#a490b5d6] cursor-pointer ${
               sidebarCollapsed ? "lg:justify-center lg:px-1" : ""
             }`}
           >
-            <span className={`${sidebarCollapsed ? "lg:hidden" : ""}`}>
+            <span className={` font-bold ${sidebarCollapsed ? "lg:hidden" : ""}`}>
               Credits
             </span>
             <span
@@ -878,7 +878,7 @@ export default function SaralPromptScreen() {
                 AI message generator
               </motion.h3>
 
-              <span className="text-xs sm:text-sm md:text-base text-[#3F1562]  pr-2 sm:pr-4 md:pr-6 lg:pr-[35px]">
+              <span className="text-xs sm:text-sm md:text-base text-[#3F1562] font-Manrope font-semibold  pr-2 sm:pr-4 md:pr-6 lg:pr-[35px]">
                 {savedProfilesData?.length} Candidates Selected
               </span>
             </div>

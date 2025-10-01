@@ -159,7 +159,7 @@ const RecentSearchTab = ({
               setIsSearchChartOpen(true);
               handleMobileSidebarClose();
             }}
-            className="text-sm outline-none font-medium px-5 py-2 rounded-full bg-clip-text text-transparent bg-gradient-to-r from-[#3F1562] to-[#DF6789] border border-transparent hover:border-[#DF6789] transition-all duration-300 cursor-pointer"
+            className="text-sm outline-none font-medium px-21 py-2 rounded-md text-[#886F9D] hover:bg-[#a490b5d6] hover:text-[#3F1562] cursor-pointer"
           >
             View More
           </button>

@@ -283,7 +283,7 @@ const AppRoutes: React.FC = () => {
       children: [
         {
           index: true,
-          element: <PromptScreen />,
+          element: true ? <SaralPromptScreen /> : <PromptScreen />,
         },
         {
           path: "result",

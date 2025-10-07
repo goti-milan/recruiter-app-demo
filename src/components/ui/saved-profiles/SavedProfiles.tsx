@@ -101,7 +101,6 @@ const SavedProfilesTab: React.FC<SavedProfilesTabProps> = ({
         authorizedUserId
       );
       setSavedProfileCount(response.total);
-
     } catch (err: any) {
       console.error("Error deleting profile:", err);
     } finally {
@@ -118,11 +117,7 @@ const SavedProfilesTab: React.FC<SavedProfilesTabProps> = ({
   }
 
   if (profiles.length === 0) {
-    return (
-      <div className="flex justify-center items-center py-20">
-        <NoCandidatesShortlisted />
-      </div>
-    );
+    return <NoCandidatesShortlisted />;
   }
 
   const handleMessageCandidate = () => {
@@ -133,16 +128,17 @@ const SavedProfilesTab: React.FC<SavedProfilesTabProps> = ({
 
   return (
     <div className="w-full mx-auto max-h-[90vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent">
-      <div className="flex items-start justify-between rounded-2xl p-3 sm:p-4 bg-transparent ">
+      <div className="m-auto flex items-start max-w[1440px] justify-between rounded-2xl p-3 sm:p-4 bg-transparent ">
         <span className="text-base sm:text-lg text-[#3D1562] font-medium">
           {profiles.length} Candidates Selected
         </span>
-        <div className="w-full max-w-[12rem] rounded-xl p-[1.5px] bg-[#886F9D]">
+
+        <div className="w-full max-w-[12rem] rounded-xl p-[1.5px]">
           <button
             onClick={() => handleMessageCandidate()}
-            className="w-full rounded-xl outline-none bg-[#FFFFFF] py-2 font-semibold hover:bg-white/90 transition"
+            className="w-full rounded-xl outline hover:bg-[#3F1562] hover:text-white text-[#3F1562] border-[#3F1562] hover:outline-none bg-white py-2 font-semibold"
           >
-            <span className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#3F1562] to-[#DF6789] bg-clip-text text-transparent text-sm sm:text-base">
+            <span className="flex items-center justify-center gap-2 text-sm sm:text-base">
               <RegenerateMessageSvg className="w-4 h-4 sm:w-5 sm:h-5" />
               <span className="whitespace-nowrap">Generate Message</span>
             </span>
@@ -151,7 +147,7 @@ const SavedProfilesTab: React.FC<SavedProfilesTabProps> = ({
       </div>
 
       {/* Profiles Grid - Maintains current layout */}
-      <div className="m-auto mx-4 h-full grid grid-cols-1 max-w-[1440px] sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 justify-items-center grid-1335-2 grid-1280-1320-2 grid-640-713-1">
+      <div className=" h-full grid grid-cols-1 max-w-[1440px]  sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4  justify-items-center grid-1335-2 grid-1280-1320-2 grid-640-713-1">
         {profiles.map((profile, i) => {
           const experienceData = JSON.parse(profile.experience || "[]");
           const overallExperience = calculateExperience(experienceData);

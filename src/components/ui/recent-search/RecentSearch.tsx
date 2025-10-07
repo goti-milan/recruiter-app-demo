@@ -104,7 +104,7 @@ const RecentSearchTab = ({
             handleHistoryClick(item.id, item.query_text);
             handleMobileSidebarClose();
           }}
-          className="flex justify-between items-center bg-white rounded-xl px-3 py-2 mb-2 shadow-sm border border-[#f0ebf8] cursor-pointer transition-all duration-200 hover:shadow-md hover:border-[#e1d6f2] hover:bg-[#fefefe] active:transform active:scale-[0.98]"
+          className="flex justify-between items-center bg-white rounded-xl px-3 py-2 mb-2 cursor-pointer transition-all duration-200 hover:shadow-md hover:border-[#e1d6f2] hover:bg-[#fefefe] active:transform active:scale-[0.98]"
         >
           <div className="flex flex-col">
             <span className="text-sm font-medium text-[#2d1b4a] truncate max-w-[150px]">
@@ -142,14 +142,7 @@ const RecentSearchTab = ({
   }
 
   return (
-    <div className="bg-white/50 rounded-2xl xl:h-[360px] md:h-[347px] border-[3px] border-white p-3 w-full mt-[15px] max-w-xs">
-      <h3 
-        className="text-[#3F1562] tracking-wide font-semibold mb-2 flex items-center gap-2 cursor-pointer"
-        onClick={handleRecentSearchClick}
-      >
-        <RecentSearch />
-        Recent Searches
-      </h3>
+    <div className="bg-white/50 rounded-2xl xl:h-[360px] md:h-[347px] border-[3px] border-white w-full  max-w-xs">
       {windowHeight >= 753 && <div className="border-t border-[#e9e4f3] mb-3 overflow-y-auto" /> }
       {windowHeight >= 753 && <div className="space-y-2">{renderedItems}</div>}
       {windowHeight >= 753 && history.length > 4 && (

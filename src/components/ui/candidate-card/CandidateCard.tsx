@@ -370,18 +370,10 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
       style={{ maxWidth: `${maxWidth}px` }}
     >
       <div
-        className={`p-[2px] rounded-[20px] transition-all duration-300 
-    ${
-      isSaved && !isForSavedList
-        ? "bg-gradient-to-r from-[#DF6789] to-[#3F1562]"
-        : "bg-gradient-to-r from-[#F3E8FF] to-[#FDECF5]"
-    }`}
-        // className={`p-[2.5px] rounded-[20px] transition-all duration-300 overflow-hidden ${isSaved
-        //     ? "bg-gradient-to-r from-[#DF6789] to-[#3F1562]"
-        //     : "bg-gradient-to-r from-[#F3E8FF] to-[#FDECF5]"
-        //   }`}
+        className={`p-[2px] rounded-[20px] transition-all duration-300 `}
+        
       >
-        <div className="bg-white rounded-[20px] p-5">
+        <div className="bg-white rounded-[20px] p-5 hover:border-[2px]  hover:border-[#3D1562] ">
           <div
             className={`rounded-lg relative transition-all duration-300 ${"bg-white/50 backdrop-blur-sm"}`}
           >
@@ -389,7 +381,7 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
                 <div className="w-10 h-10 bg-[#F5F5F5] rounded-full flex items-center justify-center">
-                  <span className="text-xl font-bold text-purple-800">
+                  <span className="text-xl font-bold text-[#3D1562]">
                     {candidate.initials}
                   </span>
                 </div>

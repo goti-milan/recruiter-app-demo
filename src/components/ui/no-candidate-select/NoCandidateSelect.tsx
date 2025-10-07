@@ -1,38 +1,29 @@
+import { SARAL_AI_NEW_CHAT } from "@/routes";
+import { useNavigate } from "react-router";
+
 export default function NoCandidatesCampaign() {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col items-center justify-center text-center py-20">
-      <h1 className="text-4xl font-bold text-purple-900 mb-8">
+       <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#3F1562]  sm:mb-4">
         No Candidates Selected For Campaign
       </h1>
-      
+
       <div className="flex gap-4">
         {/* Search Candidates Button */}
-        <div className="w-48 rounded-xl p-[1.5px] bg-gradient-to-r from-[#FFDFA9] to-[#BF9CF9]">
-          <button
-            className="w-full rounded-xl outline-none bg-white py-2 font-semibold hover:bg-white/90 transition"
-            onClick={() => {
-              console.log('Search Candidates clicked');
-            }}
-          >
-            <span className="bg-gradient-to-r from-[#3F1562] to-[#DF6789] bg-clip-text text-transparent font-semibold">
-              Search Candidates
-            </span>
-          </button>
-        </div>
+        <button
+          className="w-48 rounded-xl hover:outline bg-[#3F1562] text-white hover:text-[#3F1562] hover:border-[#3F1562] hover:bg-white py-2 font-semibold"
+          onClick={() => navigate(SARAL_AI_NEW_CHAT)}
+        >
+          Search Candidate
+        </button>
 
-        {/* View Shortlist Button */}
-        <div className="w-48 rounded-xl p-[1.5px] bg-gradient-to-r from-[#FFDFA9] to-[#BF9CF9]">
-          <button
-            className="w-full rounded-xl outline-none bg-white py-2 font-semibold hover:bg-white/90 transition"
-            onClick={() => {
-              console.log('View Shortlist clicked');
-            }}
-          >
-            <span className="bg-gradient-to-r from-[#3F1562] to-[#DF6789] bg-clip-text text-transparent font-semibold">
-              View Shortlist
-            </span>
-          </button>
-        </div>
+        <button
+          className="w-48 rounded-xl hover:outline bg-[#3F1562] text-white hover:text-[#3F1562] hover:border-[#3F1562]  hover:bg-white py-2 font-semibold"
+          onClick={() => navigate("/saral-ai/saved-campaigns")}
+        >
+            View Shortlist
+        </button>
       </div>
     </div>
   );

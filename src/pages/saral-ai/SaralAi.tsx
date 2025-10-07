@@ -47,6 +47,7 @@ import { GoHome } from "react-icons/go";
 import { GrStatusInfo } from "react-icons/gr";
 import { FiSidebar } from "react-icons/fi";
 import { BiEdit } from "react-icons/bi";
+import NoCandidatesCampaign from "@/components/ui/no-candidate-select/NoCandidateSelect";
 
 interface CandidateData {
   id: number;
@@ -340,7 +341,7 @@ export default function SaralPromptScreen() {
           onClick={handleToggleSidebar}
           className="lg:hidden fixed top-4.5 left-4 z-999 text-[#3F1562] rounded-xl w-10 h-10 flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all duration-200"
         >
-           <FiSidebar className="text-[#3F1562] text-2xl"  />
+          <FiSidebar className="text-[#3F1562] text-2xl" />
         </button>
       )}
 
@@ -411,7 +412,7 @@ export default function SaralPromptScreen() {
               onClick={handleToggleSidebar}
             >
               {/* <ToggleSVG /> */}
-              <FiSidebar className="text-[#3F1562] text-2xl"  />
+              <FiSidebar className="text-[#3F1562] text-2xl" />
             </div>
 
             {/* Mobile: Toggle button on right side when sidebar is open */}
@@ -420,7 +421,7 @@ export default function SaralPromptScreen() {
               onClick={handleToggleSidebar}
             >
               {/* <ToggleSVG /> */}
-             <FiSidebar className="text-[#3F1562] text-2xl"  />
+              <FiSidebar className="text-[#3F1562] text-2xl" />
             </div>
           </div>
 
@@ -445,7 +446,7 @@ export default function SaralPromptScreen() {
             >
               {/* New Chat icon */}
               {/* <NewChat /> */}
-              <BiEdit  className="text-2xl"/>
+              <BiEdit className="text-2xl" />
               <span className={`${sidebarCollapsed ? "lg:hidden" : ""}`}>
                 New Chat
               </span>
@@ -500,22 +501,24 @@ export default function SaralPromptScreen() {
               </span>
             </button>
 
-            {sidebarCollapsed ? (
-              <button
-                className={`flex items-center -2 py-2 px-2 mt-12 hover:bg-[#a490b5d6] rounded-lg transition font-medium ${
-                  sidebarCollapsed ? "lg:justify-center lg:px-0" : ""
-                }`}
-                onClick={() => setIsSearchChartOpen(true)}
-              >
-                <RecentSearch />
-              </button>
-            ) : (
-              ""
-            )}
+            <button
+              className={`flex items-center 
+              
+                   text-[#2d1b4a]
+               gap-2 py-2 px-2 rounded-lg transition font-medium ${
+                 sidebarCollapsed ? "lg:justify-center lg:px-0" : ""
+               }`}
+              onClick={() => sidebarCollapsed && setIsSearchChartOpen(true)}
+            >
+              {/* LinkedIn Campaign icon */}
+              <RecentSearch />
+              <span className={`${sidebarCollapsed ? "lg:hidden" : ""}`}>
+                Recent Searches
+              </span>
+            </button>
           </div>
 
-          {/* Recent Searches - hide when collapsed */}
-          <div className={`${sidebarCollapsed ? "lg:hidden" : ""}`}>
+          <div className={`${sidebarCollapsed ? "lg:hidden" : ""} `}>
             <RecentSearchTab
               setIsSearchChartOpen={setIsSearchChartOpen}
               setInpValue={setInpValue}
@@ -536,7 +539,9 @@ export default function SaralPromptScreen() {
               sidebarCollapsed ? "lg:justify-center lg:px-1" : ""
             }`}
           >
-            <span className={` font-bold ${sidebarCollapsed ? "lg:hidden" : ""}`}>
+            <span
+              className={` font-bold ${sidebarCollapsed ? "lg:hidden" : ""}`}
+            >
               Credits
             </span>
             <span
@@ -549,13 +554,13 @@ export default function SaralPromptScreen() {
           </div>
 
           {/* Upgrade button */}
-          <div className="w-full rounded-xl p-[1.5px] bg-[#3F1562]">
+          <div className="w-full rounded-xl p-[1.5px]">
             <button
               className={`w-full ${
                 sidebarCollapsed
                   ? "h-[34px] w-[34px] flex justify-center items-center"
                   : "hover:bg-white/90"
-              } rounded-xl outline-none bg-[#3F1562] text-white py-2 font-semibold hover:text-[#3F1562] transition ${
+              } rounded-xl hover:outline bg-[#3F1562] text-white py-2 font-semibold hover:text-[#3F1562] transition ${
                 sidebarCollapsed ? "lg:text-xs lg:py-1" : ""
               }`}
               onClick={() => {
@@ -578,7 +583,7 @@ export default function SaralPromptScreen() {
 
           {/* Support button */}
           <button
-            className={`w-full rounded-xl outline-none py-2 mt-2 flex items-center justify-center gap-2 text-[#3F1462] text-base font-semibold hover:bg-white/20 transition ${
+            className={`w-full rounded-xl  py-2 mt-2 flex items-center justify-center gap-2 text-[#3F1462] text-base font-semibold hover:bg-[#a490b5d6] cursor-pointer transition ${
               sidebarCollapsed ? "lg:px-1" : ""
             }`}
             onClick={() => {
@@ -606,7 +611,10 @@ export default function SaralPromptScreen() {
             onClick={() => setIsInfoOpen(true)}
           >
             {/* <InfoIcon /> */}
-            <GrStatusInfo className="text-[#3F1562] text-xl text-bold" strokeWidth={0.5} />
+            <GrStatusInfo
+              className="text-[#3F1562] text-xl text-bold"
+              strokeWidth={0.5}
+            />
           </button>
 
           {/* Home Section */}
@@ -615,7 +623,7 @@ export default function SaralPromptScreen() {
             className="group flex items-center h-[30px] space-x-1 sm:space-x-3 px-2 sm:px-3 py-1.5 bg-purple-50 hover:bg-[#a490b5d6] rounded-xl transition-all duration-200 active:scale-95"
           >
             {/* <Homeicon /> */}
-           <GoHome className="text-[#3F1562] text-2xl" strokeWidth={0.5} />
+            <GoHome className="text-[#3F1562] text-2xl" strokeWidth={0.5} />
             <span className="text-[#3F1562] font-bold text-sm sm:text-base">
               Home
             </span>
@@ -738,7 +746,7 @@ export default function SaralPromptScreen() {
                 </div>
                 {/* Set result cards */}
                 <div className="max-h-[70vh] overflow-y-auto">
-                  <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6 justify-items-center mx-2 grid-1335-2 grid-1280-1320-2 grid-640-713-1">
+                  <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6 justify-items-center mx-2 grid-1335-2 grid-1280-1320-2 grid-640-713-1 py-4">
                     {/* ... rest of your card content remains the same ... */}
                     {SkeletonLoading
                       ? Array.from({ length: 6 }).map((_, index) => (
@@ -864,24 +872,22 @@ export default function SaralPromptScreen() {
         )}
         {isLinkedinCampaign && (
           <div className="flex-1">
-            <div className="flex justify-between h-[30px] items-center px-2 sm:px-3 lg:px-4">
-              <motion.h3
-                className="
-        text-[#3F1562] font-Manrope font-semibold 
-        my-4 sm:my-6 lg:my-8 
-        mx-4 sm:mx-8 md:mx-12 lg:mx-14
-      "
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                AI message generator
-              </motion.h3>
+            {!!savedProfilesData?.length && (
+              <div className="flex justify-between h-[30px] items-center px-2 sm:px-3 lg:px-4">
+                <motion.h3
+                  className="text-[#3F1562] font-Manrope font-semibold my-4 sm:my-6 lg:my-8 mx-4 sm:mx-8 md:mx-12 lg:mx-14"
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  AI message generator
+                </motion.h3>
 
-              <span className="text-xs sm:text-sm md:text-base text-[#3F1562] font-Manrope font-semibold  pr-2 sm:pr-4 md:pr-6 lg:pr-[35px]">
-                {savedProfilesData?.length} Candidates Selected
-              </span>
-            </div>
+                <span className="text-xs sm:text-sm md:text-base text-[#3F1562] font-Manrope font-semibold  pr-2 sm:pr-4 md:pr-6 lg:pr-[35px]">
+                  {savedProfilesData?.length} Candidates Selected
+                </span>
+              </div>
+            )}
 
             {/* Editor */}
             <motion.div
@@ -910,7 +916,7 @@ export default function SaralPromptScreen() {
                       sidebarCollapsed ? "w-[90vw]" : "w-[75vw]"
                     } flex items-center justify-center`}
                   >
-                    <p>No selected candidate</p>
+                    <NoCandidatesCampaign />
                   </div>
                 )}
               </div>

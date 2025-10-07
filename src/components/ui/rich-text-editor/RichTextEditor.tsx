@@ -250,7 +250,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ candidate }) => {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto bg-[#fffdfd] rounded-2xl border-[2px] border-[#3F1562] overflow-hidden">
+    <div className="w-full max-w-2xl mx-auto bg-[#fffdfd] rounded-2xl hover:border-[2px] hover:border-[#3F1562] overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gray-50/50">
         <div className="flex items-center space-x-3">
@@ -261,7 +261,9 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ candidate }) => {
             <div className="text-base font-bold text-gray-900">
               {candidate.name}
             </div>
-            <div className="text-sm text-gray-500">{candidate.headline}</div>
+            <div className="text-sm text-gray-500 truncate max-w-[45ch]">
+              {candidate.headline}
+            </div>
           </div>
         </div>
         <div className="relative">

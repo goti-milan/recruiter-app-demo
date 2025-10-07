@@ -18,14 +18,14 @@ export function SupportModal({ isOpen, onClose }: SupportModalProps) {
       </div>
 
       {/* Wrapper for both cards */}
-      <div className="grid grid-cols-1 font-manrope md:grid-cols-2 gap-4 bg-white rounded-2xl p-4 shadow-md">
+      <div className="grid grid-cols-1 font-manrope md:grid-cols-2 gap-4 bg-white rounded-2xl ">
         {/* Email Support */}
-        <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-          <h4 className="font-semibold text-[#3D1562] mb-1">Email Support</h4>
+        <div className="rounded-xl border border-gray-200 bg-[#F9F1FF] p-5 shadow-sm">
+          <h3 className="text-2xl font-bold text-[#3D1562] mb-1">Email Support</h3>
           <p className="text-[#3D1562] opacity-40 text-sm mb-4">
             Get help via email within 24 hours
           </p>
-          <div className="flex items-center gap-2 text-[#3D1562]">
+          <div className="flex items-center gap-2 text-[#3D1562] bg-white roundd-xl py-2 px-4">
             {/* Email Icon */}
             <svg
               width="19"
@@ -59,12 +59,12 @@ export function SupportModal({ isOpen, onClose }: SupportModalProps) {
         </div>
 
         {/* Contact Number */}
-        <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-          <h4 className="font-semibold text-[#3D1562] mb-1">Contact No.</h4>
+         <div className="rounded-xl border border-gray-200 bg-[#F9F1FF] p-5 shadow-sm">
+          <h3 className="text-2xl font-bold text-[#3D1562] mb-1">Contact No.</h3>
           <p className="text-[#3D1562] opacity-40 text-sm mb-4">
             Chat with our support team
           </p>
-          <div className="flex items-center gap-2 text-[#3D1562]">
+         <div className="flex items-center gap-2 text-[#3D1562] bg-white roundd-xl py-2 px-4">
             {/* Mobile Icon */}
             <svg
               width="18"

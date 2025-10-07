@@ -873,9 +873,9 @@ export default function SaralPromptScreen() {
         {isLinkedinCampaign && (
           <div className="flex-1">
             {!!savedProfilesData?.length && (
-              <div className="flex justify-between h-[30px] items-center px-2 sm:px-3 lg:px-4">
+              <div className="flex justify-between h-[30px] items-center px-2 sm:px-3 lg:px-4 ai-container">
                 <motion.h3
-                  className="text-[#3F1562] font-Manrope font-semibold my-4 sm:my-6 lg:my-8 mx-4 sm:mx-8 md:mx-12 lg:mx-14"
+                  className="text-[#3F1562] font-Manrope font-semibold"
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
@@ -883,7 +883,7 @@ export default function SaralPromptScreen() {
                   AI message generator
                 </motion.h3>
 
-                <span className="text-xs sm:text-sm md:text-base text-[#3F1562] font-Manrope font-semibold  pr-2 sm:pr-4 md:pr-6 lg:pr-[35px]">
+                <span className="text-xs sm:text-sm md:text-base text-[#3F1562] font-Manrope font-semibold">
                   {savedProfilesData?.length} Candidates Selected
                 </span>
               </div>

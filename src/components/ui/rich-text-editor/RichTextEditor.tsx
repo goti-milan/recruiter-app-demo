@@ -261,7 +261,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ candidate }) => {
             <div className="text-base font-bold text-gray-900">
               {candidate.name}
             </div>
-            <div className="text-sm text-gray-500 truncate max-w-[45ch]">
+            <div className="text-sm text-gray-500 truncate max-w-[45vh] editor-occ">
               {candidate.headline}
             </div>
           </div>

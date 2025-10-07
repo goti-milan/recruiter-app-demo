@@ -174,3 +174,68 @@
     width: 500px;
   }
 }
+
+@media (min-width: 1340px) and (max-width: 1430px) {
+
+  .container {
+    padding : 14px 80px;
+  }
+}
+
+@media (min-width: 1138px) and (max-width: 1320px) {
+
+  .container {
+    padding : 14px 20px;
+  }
+}
+
+@media (min-width: 850px) and (max-width: 1025px) {
+
+  .container {
+    padding : 14px 45px;
+  }
+}
+
+@media (min-width: 1160px) and (max-width: 1315px) {
+
+  .container {
+    padding : 14px 60px;
+  }
+}
+
+@media (min-width: 319px) and (max-width: 380px) {
+
+  .card-mobile {
+    padding : 55px 10px;
+  }
+}
+
+@media (min-width: 990px) and (max-width: 1020px) {
+
+  .ai-container {
+    padding :0px 175px;
+  }
+}
+
+@media (min-width: 710px) and (max-width: 989px) {
+
+  .ai-container {
+    padding :0px 40px;
+  }
+}
+
+@media (min-width: 1109px) and (max-width: 1786px) {
+
+  .ai-container {
+    padding :0px 45px;
+  }
+}
+
+@media (min-width: 319px) and (max-width: 360px) {
+
+.editor-occ {
+  width: 107px;
+  height: 30px;
+}
+}
+

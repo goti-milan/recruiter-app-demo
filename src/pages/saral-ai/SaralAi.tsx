@@ -281,7 +281,6 @@ export default function SaralPromptScreen() {
           inputRef.current?.blur();
           setResults({ type: "profiles", data: response });
           setAllResults(response.matched_profiles);
-
         } else {
           // Load more - append new results
           const updatedResults = [...allResults, ...response.matched_profiles];
@@ -331,7 +330,6 @@ export default function SaralPromptScreen() {
         </button>
       )}
 
-  
       {/* Overlay for mobile */}
       {isOpen && (
         <div
@@ -577,17 +575,16 @@ export default function SaralPromptScreen() {
       </aside>
 
       <main
-        className={`flex-1 min-h-screen flex flex-col transition-all duration-300 ease-in-out ${
+        className={`flex-1 flex flex-col max-h-screen transition-all duration-300 ease-in-out overflow-hidden ${
           sidebarCollapsed ? "lg:ml-0" : ""
         }`}
       >
-        <div className="sticky top-0 h-[74px] z-50 flex items-center justify-end px-4 sm:px-6 lg:px-8 py-3">
+        <div className="flex-shrink-0 h-[74px] z-50 flex items-center justify-end px-4 sm:px-6 lg:px-8 py-3">
           {/* Info Icon */}
           <button
             className="group flex outline-none items-center bg-purple-50 justify-center mx-2 w-[30px] h-[30px] hover:bg-[#a490b5d6] rounded-md transition-all duration-200 active:scale-95"
             onClick={() => setIsInfoOpen(true)}
           >
-            {/* <InfoIcon /> */}
             <GrStatusInfo
               className="text-[#3F1562] text-xl text-bold"
               strokeWidth={0.5}
@@ -599,7 +596,6 @@ export default function SaralPromptScreen() {
             onClick={() => navigate(DASHBOARD)}
             className="group flex items-center h-[30px] space-x-1 sm:space-x-3 px-2 sm:px-3 py-1.5 bg-purple-50 hover:bg-[#a490b5d6] rounded-xl transition-all duration-200 active:scale-95"
           >
-            {/* <Homeicon /> */}
             <GoHome className="text-[#3F1562] text-2xl" strokeWidth={0.5} />
             <span className="text-[#3F1562] font-bold text-sm sm:text-base">
               Home
@@ -610,7 +606,7 @@ export default function SaralPromptScreen() {
         {/* Centered content area */}
         {!isLinkedinCampaign && !isSaved && (
           <div
-            className={`flex-1 flex flex-col w-full mt-[20px] items-center px-4 sm:px-6 lg:px-8 ${
+            className={`flex-1 flex flex-col w-full items-center px-4 sm:px-6 lg:px-8 overflow-hidden ${
               results?.data &&
               (results.type === "history"
                 ? results.data.data
@@ -620,7 +616,7 @@ export default function SaralPromptScreen() {
                 : "justify-center"
             }`}
           >
-            <div className="w-full max-w-3xl text-center mb-6 sm:mb-8">
+            <div className="w-full max-w-3xl text-center mb-6 sm:mb-8 flex-shrink-0">
               {isNewChat && !results && (
                 <>
                   <div className="mb-8">
@@ -641,7 +637,7 @@ export default function SaralPromptScreen() {
                 results || isResult || SkeletonLoading
                   ? "max-w-7xl"
                   : "max-w-3xl"
-              } flex flex-col items-center sm:gap-4`}
+              } flex flex-col items-center sm:gap-4 flex-1 overflow-hidden`}
             >
               {/* Input field */}
               <motion.div
@@ -657,11 +653,11 @@ export default function SaralPromptScreen() {
                       : 0,
                 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="w-full"
+                className="w-full flex flex-col flex-1 overflow-hidden"
               >
-                {/* Prompt Box - Removed sticky positioning for mobile scroll */}
+                {/* Prompt Box */}
                 <div
-                  className={`mb-4 ${
+                  className={`mb-4 flex-shrink-0 ${
                     sidebarCollapsed ? "z-50" : "z-0"
                   } w-full flex flex-row items-center bg-white/80 border border-[#3F1462] rounded-full p-2 sm:p-4 shadow-sm gap-2`}
                 >
@@ -722,9 +718,8 @@ export default function SaralPromptScreen() {
                   </div>
                 </div>
                 {/* Set result cards */}
-                <div className="max-h-[70vh] overflow-y-auto">
+                <div className="flex-1 overflow-y-auto">
                   <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6 justify-items-center mx-2 grid-1335-2 grid-1280-1320-2 grid-640-713-1 py-4">
-                    {/* ... rest of your card content remains the same ... */}
                     {SkeletonLoading
                       ? Array.from({ length: 6 }).map((_, index) => (
                           <div
@@ -800,9 +795,6 @@ export default function SaralPromptScreen() {
                           onClick={handleLoadMore}
                           disabled={isLoadingMore}
                           className="px-8 py-2 rounded-xl font-semibold hover:scale-105 bg-[#3D1562] text-[white] transition-all duration-200 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-                          style={{
-                            
-                          }}
                         >
                           {isLoadingMore ? (
                             <div className="flex items-center gap-2">
@@ -816,7 +808,6 @@ export default function SaralPromptScreen() {
                       </div>
                     )}
                 </div>
-                   
               </motion.div>
 
               {isHandleError && (
@@ -842,7 +833,7 @@ export default function SaralPromptScreen() {
           </div>
         )}
         {isLinkedinCampaign && (
-          <div className="flex-1 flex justify-center items-start h-screen">
+          <div className="flex-1 flex justify-center items-start overflow-hidden">
             <Linkedin
               savedProfilesData={savedProfilesData}
               sidebarCollapsed={sidebarCollapsed}
@@ -850,7 +841,7 @@ export default function SaralPromptScreen() {
           </div>
         )}
         {isSaved && (
-          <div className="flex-1 flex justify-center items-start h-screen">
+          <div className="flex-1 flex justify-center items-start overflow-hidden">
             <SavedProfilesTab
               setSavedProfileCount={setSavedProfileCount}
               savedProfilesData={savedProfilesData}
@@ -859,7 +850,7 @@ export default function SaralPromptScreen() {
           </div>
         )}
         {/* Footer */}
-        <footer className="text-center p-4 sm:p-6 text-xs sm:text-[13px] text-[royalPurple] opacity-50 px-4">
+        <footer className="flex-shrink-0 text-center p-4 sm:p-6 text-xs sm:text-[13px] text-[royalPurple] opacity-50 px-4">
           Saral AI simplifies sourcing, but human judgment is still key
         </footer>
       </main>

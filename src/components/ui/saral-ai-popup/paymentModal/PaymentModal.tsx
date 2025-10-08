@@ -82,7 +82,7 @@ const PaymentModal = ({
 
           {/* Savings Info */}
           <div className="flex items-center gap-2 text-green-600 bg-white justify-center p-2 text-sm rounded-xl">
-            ✅ <span className="font-bold text-[14px] text-[#3F1562]">Yay! You saved ₹750 on this plan.</span>
+            ✅ <span className="font-bold text-[14px] text-[#3F1562]">Yay! You saved ₹{selectedPlan?.oldPrice - selectedPlan?.price} on this plan.</span>
           </div>
 
           {/* Proceed Button */}

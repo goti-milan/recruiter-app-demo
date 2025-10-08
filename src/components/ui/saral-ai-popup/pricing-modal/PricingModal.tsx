@@ -22,6 +22,8 @@ const plans: Plan[] = [
   {
     name: "Lorem",
     price: 0,
+    oldPrice: 0,
+    discount: 0,
     credits: 450,
     profiles: 450,
     features: [
@@ -50,6 +52,8 @@ const plans: Plan[] = [
   {
     name: "Pro",
     price: 5499,
+    oldPrice: 7500,
+    discount: 28,
     credits: 1000,
     profiles: 1000,
     features: [

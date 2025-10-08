@@ -125,15 +125,7 @@ const RecentSearchTab = ({
 
   if (initialLoad && loading) {
     return (
-      <div className="bg-white/50 rounded-2xl h-2 border-[3px] border-white p-3 w-full mt-[15px] max-w-xs">
-        <h3 
-          className="text-[#3F1562] tracking-wide font-semibold mb-2 flex items-center gap-2 cursor-pointer"
-          onClick={handleRecentSearchClick}
-        >
-          <RecentSearch />
-          Recent Searches
-        </h3>
-        {/* <div className="border-t border-[#e9e4f3] mb-3" /> */}
+      <div className="bg-white/50 rounded-2xl h-2 border-[3px] border-white p-3 w-full max-w-xs">
         <div className="flex justify-center py-8">
           <ButtonLoader isVisible={loading} />
         </div>

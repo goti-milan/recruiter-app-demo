@@ -58,12 +58,12 @@ export const CommonModal: React.FC<CommonModalProps> = ({
             transition={{ duration: 0.25, ease: "easeInOut" }}
           >
             {/* Close Button */}
-            <button
-              onClick={onClose}
-              className="absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-400 hover:text-gray-600"
-            >
-              ✕
-            </button>
+              <button
+                onClick={onClose}
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-400 hover:text-gray-600"
+              >
+                ✕
+              </button>
 
             {children}
           </motion.div>

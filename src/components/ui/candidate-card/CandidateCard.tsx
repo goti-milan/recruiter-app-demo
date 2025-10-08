@@ -480,7 +480,7 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
                     // onClick={handleMessageCandidate}
                     disabled={loading}
                     className={`w-full max-w-[380px] rounded-xl text-sm font-bold px-3 py-1.5 transition-all duration-300 ease-in-out
-                text-[#3F1562] bg-white border-[#3F1562] border-[1px] hover:bg-[#3F1562] hover:text-white
+                text-[#3F1562] bg-white border-[#3F1562] border-[1px] 
                ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
                   >
                     Saved

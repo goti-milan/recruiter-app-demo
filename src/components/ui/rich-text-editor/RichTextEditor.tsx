@@ -297,7 +297,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ candidate }) => {
         >
           <div className="flex items-center space-x-4">
             {/* Undo/Redo */}
-            <div className="flex items-center space-x-1">
+            <div className="flex  items-center space-x-2">
               <button
                 className={`p-1 hover:bg-gray-100 rounded transition-colors duration-150 ${
                   historyIndex <= 0 ? "opacity-50 cursor-not-allowed" : ""
@@ -344,10 +344,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ candidate }) => {
               </button>
             </div>
 
-            {/* Divider */}
-            <div className="w-px h-4 bg-gray-300"></div>
+            {/* <div className="w-px h-4 bg-gray-300"></div>
 
-            {/* Text Formatting */}
             <div className="flex items-center space-x-1">
               <button
                 className={`px-2 py-1 hover:bg-gray-100 rounded transition-colors duration-150 font-bold text-lg ${
@@ -381,11 +379,10 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ candidate }) => {
               >
                 U
               </button>
-            </div>
+            </div> */}
           </div>
 
-          {/* Lists */}
-          <div className="flex items-center space-x-1">
+          {/* <div className="flex items-center space-x-1">
             <button
               className={`p-1 hover:bg-gray-100 rounded transition-colors duration-150 ${
                 isListActive("ul") ? "bg-gray-200" : ""
@@ -436,7 +433,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ candidate }) => {
                 />
               </svg>
             </button>
-          </div>
+          </div> */}
         </div>
       )}
 
@@ -465,7 +462,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ candidate }) => {
         {isEditMode ? (
           <>
             <button
-              className="px-6 py-2 text-sm text-[#3F1562] bg-[#fafafa] border-[2px] border-[#3F1562] hover:bg-purple-100 transition-colors duration-150 rounded-lg hover:border-gray-300"
+              className="px-6 py-2 text-sm text-[#3F1562] bg-[#fafafa]   hover:outline  duration-150 rounded-lg "
               onClick={() => setIsEditMode(false)}
             >
               Cancel
@@ -485,10 +482,10 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ candidate }) => {
                 onClick={handleClick}
                 onMouseEnter={() => !copied && setShowTooltip(true)}
                 onMouseLeave={() => !copied && setShowTooltip(false)}
-                className={`flex items-center transition ${
+                className={`flex items-center h-[40px]  ${
                   !copied
                     ? "opacity-50 cursor-not-allowed"
-                    : "opacity-100 border-[#3F1562]"
+                    : "opacity-100 "
                 }`}
               >
                 <SendLinkdinSvg />

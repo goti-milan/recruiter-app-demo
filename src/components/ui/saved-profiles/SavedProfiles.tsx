@@ -128,12 +128,12 @@ const SavedProfilesTab: React.FC<SavedProfilesTabProps> = ({
 
   return (
     <div className="w-full mx-auto max-h-[90vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent">
-      <div className="m-auto flex items-center max-w-[1440px] justify-between rounded-2xl p-3 sm:p-4 bg-transparent container">
-        <span className="text-base sm:text-lg text-[#3D1562] font-medium">
+      <div className="m-auto flex items-center max-w-[1440px] justify-between rounded-2xl p-2 sm:p-4 bg-transparent container">
+        <span className="text-base sm:text-lg text-[#3D1562] font-medium pl-9">
           {profiles.length} Candidates Selected
         </span>
 
-        <div className="w-full max-w-[12rem] rounded-xl p-[1.5px]">
+        <div className="w-full max-w-[12rem] rounded-xl p-[1.5px] mr-9">
           <button
             onClick={() => handleMessageCandidate()}
             className="w-full rounded-xl outline hover:bg-[#3F1562] hover:text-white text-[#3F1562] border-[#3F1562] hover:outline-none bg-white py-2 font-semibold"
@@ -147,7 +147,7 @@ const SavedProfilesTab: React.FC<SavedProfilesTabProps> = ({
       </div>
 
       {/* Profiles Grid - Maintains current layout */}
-      <div className=" h-full grid grid-cols-1 max-w-[1440px] sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 justify-items-center grid-1335-2 grid-1280-1320-2 grid-640-713-1">
+      <div className="m-auto h-full grid grid-cols-1 max-w-[1440px] sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 justify-items-center grid-1335-2 grid-1280-1320-2 grid-640-713-1">
         {profiles.map((profile, i) => {
           const experienceData = JSON.parse(profile.experience || "[]");
           const overallExperience = calculateExperience(experienceData);

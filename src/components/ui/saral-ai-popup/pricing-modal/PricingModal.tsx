@@ -3,15 +3,17 @@ import { CommonModal } from "../common-modal/CommonModal";
 interface PricingModalProps {
   isOpen: boolean;
   onClose: () => void;
+  setIsPaymentOpen: (isOpen: boolean) => void;
+  setSelectedPlan:  any;
 }
 
 type Plan = {
   name: string;
-  price: string;
-  oldPrice?: string;
-  discount?: string;
-  credits: string;
-  profiles: string;
+  price: number;
+  oldPrice?: number;
+  discount?: number;
+  credits: number;
+  profiles: number;
   features: string[];
   popular?: boolean;
 };
@@ -19,9 +21,9 @@ type Plan = {
 const plans: Plan[] = [
   {
     name: "Lorem",
-    price: "₹0",
-    credits: "450",
-    profiles: "450",
+    price: 0,
+    credits: 450,
+    profiles: 450,
     features: [
       "Lorem Ipsum is simply",
       "Lorem Ipsum is simply",
@@ -30,11 +32,11 @@ const plans: Plan[] = [
   },
   {
     name: "Standard",
-    price: "₹2,249",
-    oldPrice: "₹3000",
-    discount: "25% OFF",
-    credits: "450",
-    profiles: "450",
+    price: 2249,
+    oldPrice: 3000,
+    discount: 25,
+    credits: 450,
+    profiles: 450,
     features: [
       "All Free features",
       "Unlimited saved search history",
@@ -47,9 +49,9 @@ const plans: Plan[] = [
   },
   {
     name: "Pro",
-    price: "₹5,499",
-    credits: "1000",
-    profiles: "1000",
+    price: 5499,
+    credits: 1000,
+    profiles: 1000,
     features: [
       "All Standard features",
       "Dedicated support (2-hour SLA)",
@@ -60,7 +62,14 @@ const plans: Plan[] = [
   },
 ];
 
-export function PricingModal({ isOpen, onClose }: PricingModalProps) {
+export function PricingModal({ isOpen, onClose, setIsPaymentOpen, setSelectedPlan }: PricingModalProps) {
+
+  const handlePlanClick = (plan: Plan) => {
+    setIsPaymentOpen(true);
+    setSelectedPlan(plan);
+    onClose();
+  };
+
   return (
     <CommonModal isOpen={isOpen} onClose={onClose} size="full">
       {/* Header */}
@@ -100,7 +109,7 @@ export function PricingModal({ isOpen, onClose }: PricingModalProps) {
                 </div>
               )}
                 <div className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold text-[#3F1562] 2xl:text-[29px]">
-                  {plan.price}{" "}
+                  ₹{plan.price}{" "}
                   <span className="text-[10px] sm:text-xs md:text-sm lg:text-base font-normal text-[royalPurple]/40">
                     /month
                   </span>
@@ -108,10 +117,10 @@ export function PricingModal({ isOpen, onClose }: PricingModalProps) {
                 {plan.oldPrice && plan.discount && (
                   <div className="flex items-center gap-1 sm:gap-2 mt-1">
                     <span className="text-[royalPurple]/40 line-through text-xs sm:text-sm">
-                      {plan.oldPrice}
+                      ₹{plan.oldPrice}
                     </span>
                     <span className="bg-[#3D1562] rounded-2xl text-white px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs font-semibold">
-                      {plan.discount}
+                      {plan.discount}%
                     </span>
                   </div>
                 )}
@@ -156,7 +165,7 @@ export function PricingModal({ isOpen, onClose }: PricingModalProps) {
 
             {/* CTA Button */}
             <div className="h-[15%] sm:h-[10%] flex items-end">
-              <button className={`w-full px-4 sm:px-6 py-2 sm:py-2 outline-none rounded-lg font-medium text-xs sm:text-sm  border-[2px] border-[#3d156236] transition duration-300 ease-in-out ${plan.popular ? 'bg-[#3F1562] text-[#ffffff]' : 'text-[#3F1562]'}`}>
+              <button onClick={() => handlePlanClick(plan)} className={`w-full px-4 sm:px-6 py-2 sm:py-2 outline-none rounded-lg font-medium text-xs sm:text-sm  border-[2px] border-[#3d156236] transition duration-300 ease-in-out ${plan.popular ? 'bg-[#3F1562] text-[#ffffff]' : 'text-[#3F1562]'}`}>
                 Choose plan
               </button>
             </div>

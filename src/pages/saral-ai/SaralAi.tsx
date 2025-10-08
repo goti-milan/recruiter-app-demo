@@ -1,6 +1,3 @@
-import Homeicon from "@/components/layouts/main/svgs/Homeicon";
-import InfoIcon from "@/components/layouts/main/svgs/InfoIcon";
-import RichTextEditor from "@/components/ui/rich-text-editor/RichTextEditor";
 import { SaralInfoModal } from "@/components/ui/saral-ai-popup/info-modal/InfoModal";
 import { PricingModal } from "@/components/ui/saral-ai-popup/pricing-modal/PricingModal";
 import { SupportModal } from "@/components/ui/saral-ai-popup/support-modal/SupportModal";
@@ -18,7 +15,6 @@ import { useLocation, useNavigate, useParams } from "react-router";
 import ColoredLogo from "/src/assets/images/main/saral-recruiter-logo.webp";
 import LinkdinCampaign from "@/assets/svg/saral-ai/linkdin-campaign/LinkdinCampaign";
 import SavedProfiles from "@/assets/svg/saral-ai/saved-profiles/SavedProfiles";
-import NewChat from "@/assets/svg/saral-ai/new-chat/NewChat";
 import SendPrompt from "@/assets/svg/saral-ai/send-prompt/SendPrompt";
 import Rephrase from "@/assets/svg/saral-ai/rephrase/Rephrase";
 import Support from "@/assets/svg/saral-ai/support/Support";
@@ -35,7 +31,6 @@ import {
 } from "@/helpers/apis/saral-ai.ts";
 import RecentSearchTab from "@/components/ui/recent-search/RecentSearch";
 import SavedProfilesTab from "@/components/ui/saved-profiles/SavedProfiles";
-import ToggleSVG from "@/assets/svg/saral-ai/toggle/Toggle";
 import { calculateExperience } from "@/helpers/experience-counter";
 import SkeletonCard from "@/components/ui/skeleton/Skeleton";
 import SaralLoader from "@/components/ui/loader/SaralLoader";
@@ -47,18 +42,24 @@ import { GoHome } from "react-icons/go";
 import { GrStatusInfo } from "react-icons/gr";
 import { FiSidebar } from "react-icons/fi";
 import { BiEdit } from "react-icons/bi";
-import NoCandidatesCampaign from "@/components/ui/no-candidate-select/NoCandidateSelect";
+import Linkedin from "./Linkedin";
+import PaymentModal from "@/components/ui/saral-ai-popup/paymentModal/PaymentModal";
 
-interface CandidateData {
+type Candidate = {
   id: number;
   name: string;
   initials: string;
   position: string;
   experience: string;
   location: string;
-  assessmentScore?: number;
   profileUrl?: string;
-}
+  assessmentScore?: number;
+};
+
+type ResultData =
+  | { type: "profiles"; data: SearchProfilesResponse }
+  | { type: "history"; data: SearchHistoryByIdResponse }
+  | null;
 
 export default function SaralPromptScreen() {
   const [isOpen, setIsOpen] = useState(false);
@@ -83,13 +84,12 @@ export default function SaralPromptScreen() {
   const [animatingText, setAnimatingText] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [authorizedUserId, setAutorizedUserId] = useState<string>("");
-  const [linkdinCandidateData, setLinkdinCandidateData] = useState<
-    CandidateData[]
-  >([]);
   const [isSearchChartOpen, setIsSearchChartOpen] = useState(false);
   const [savedProfilesData, setSavedProfilesData] = useState<SavedProfile[]>(
     []
   );
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null);
 
   useEffect(() => {
     const userId = getAuthorizedUserId();
@@ -100,11 +100,6 @@ export default function SaralPromptScreen() {
   }, []);
 
   const { id: recentSearchId } = useParams();
-
-  type ResultData =
-    | { type: "profiles"; data: SearchProfilesResponse }
-    | { type: "history"; data: SearchHistoryByIdResponse }
-    | null;
 
   const [results, setResults] = useState<ResultData>(null);
 
@@ -133,17 +128,6 @@ export default function SaralPromptScreen() {
       fetchHistoryData(recentSearchId);
     }
   }, [recentSearchId]);
-
-  type Candidate = {
-    id: number;
-    name: string;
-    initials: string;
-    position: string;
-    experience: string;
-    location: string;
-    profileUrl?: string;
-    assessmentScore?: number;
-  };
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -686,7 +670,7 @@ export default function SaralPromptScreen() {
                 <div
                   className={`mb-4 ${
                     sidebarCollapsed ? "z-50" : "z-0"
-                  } w-full flex flex-row items-center bg-white/80 border border-[#DF6789] rounded-full p-2 sm:p-4 shadow-sm gap-2`}
+                  } w-full flex flex-row items-center bg-white/80 border border-[#3F1462] rounded-full p-2 sm:p-4 shadow-sm gap-2`}
                 >
                   {/* Animated Input with AnimatePresence */}
                   <AnimatePresence mode="wait">
@@ -871,56 +855,11 @@ export default function SaralPromptScreen() {
           </div>
         )}
         {isLinkedinCampaign && (
-          <div className="flex-1">
-            {!!savedProfilesData?.length && (
-              <div className="flex justify-between h-[30px] items-center px-2 sm:px-3 lg:px-4 ai-container">
-                <motion.h3
-                  className="text-[#3F1562] font-Manrope font-semibold"
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  AI message generator
-                </motion.h3>
-
-                <span className="text-xs sm:text-sm md:text-base text-[#3F1562] font-Manrope font-semibold">
-                  {savedProfilesData?.length} Candidates Selected
-                </span>
-              </div>
-            )}
-
-            {/* Editor */}
-            <motion.div
-              className="m-2 sm:m-4 lg:m-6 sm:flex sm:justify-start sm:items-center"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-            >
-              <div className="w-full ">
-                {savedProfilesData?.length ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 max-w-[1440px] gap-4 mx-auto">
-                    {savedProfilesData.map((candidate, index) => (
-                      <div key={index} className="w-full">
-                        <RichTextEditor
-                          candidate={candidate}
-                          candidate_name={candidate.name}
-                          experience={candidate.experience}
-                          skills={candidate.skills}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div
-                    className={`h-[70vh] ${
-                      sidebarCollapsed ? "w-[90vw]" : "w-[75vw]"
-                    } flex items-center justify-center`}
-                  >
-                    <NoCandidatesCampaign />
-                  </div>
-                )}
-              </div>
-            </motion.div>
+          <div className="flex-1 flex justify-center items-start h-screen">
+            <Linkedin
+              savedProfilesData={savedProfilesData}
+              sidebarCollapsed={sidebarCollapsed}
+            />
           </div>
         )}
         {isSaved && (
@@ -945,6 +884,8 @@ export default function SaralPromptScreen() {
       <PricingModal
         isOpen={isPricingOpen}
         onClose={() => setIsPricingOpen(false)}
+        setIsPaymentOpen={setIsPaymentOpen}
+        setSelectedPlan={setSelectedPlan}
       />
       <SupportModal
         isOpen={isSupportModal}
@@ -953,6 +894,11 @@ export default function SaralPromptScreen() {
       <SearchChartModal
         isOpen={isSearchChartOpen}
         onClose={() => setIsSearchChartOpen(false)}
+      />
+      <PaymentModal
+        isOpen={isPaymentOpen}
+        onClose={() => setIsPaymentOpen(false)}
+        selectedPlan={selectedPlan}
       />
     </div>
   );

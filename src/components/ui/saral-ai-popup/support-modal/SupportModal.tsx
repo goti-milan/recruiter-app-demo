@@ -25,7 +25,7 @@ export function SupportModal({ isOpen, onClose }: SupportModalProps) {
           <p className="text-[#3D1562] opacity-40 text-sm mb-4">
             Get help via email within 24 hours
           </p>
-          <div className="flex items-center gap-2 text-[#3D1562] bg-white roundd-xl py-2 px-4">
+          <div className="flex items-center gap-2 text-[#3D1562] bg-white rounded-xl py-2 px-4">
             {/* Email Icon */}
             <svg
               width="19"
@@ -64,7 +64,7 @@ export function SupportModal({ isOpen, onClose }: SupportModalProps) {
           <p className="text-[#3D1562] opacity-40 text-sm mb-4">
             Chat with our support team
           </p>
-         <div className="flex items-center gap-2 text-[#3D1562] bg-white roundd-xl py-2 px-4">
+         <div className="flex items-center gap-2 text-[#3D1562] bg-white rounded-xl py-2 px-4">
             {/* Mobile Icon */}
             <svg
               width="18"
@@ -89,7 +89,7 @@ export function SupportModal({ isOpen, onClose }: SupportModalProps) {
               />
             </svg>
             <span className="text-sm text-[#3D1562] font-medium">
-              +91 97734-97763
+              +91 907-907-5059
             </span>
           </div>
         </div>

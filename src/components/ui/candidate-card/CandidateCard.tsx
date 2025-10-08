@@ -271,6 +271,7 @@ import Delete from "@/assets/svg/saral-ai/logo/delete/Delete";
 import { getAuthorizedUserId } from "@/helpers/authorization.ts";
 import { useNavigate } from "react-router";
 import { LOGIN, SARAL_AI_LINKEDIN_CAMPAIGN } from "@/routes";
+import { BiTrash } from "react-icons/bi";
 
 // Define the props interface
 interface CandidateCardProps {
@@ -362,10 +363,10 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: animationDelay }}
+    <div
+      // initial={{ opacity: 0, y: 20 }}
+      // animate={{ opacity: 1, y: 0 }}
+      // transition={{ duration: 0.5, delay: animationDelay }}
       className="w-full flex-1 min-w-[348px] max-h-[275px] card-view card-mobile"
       style={{ maxWidth: `${maxWidth}px` }}
     >
@@ -373,7 +374,7 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
         className={`p-[2px] rounded-[20px] transition-all duration-300 `}
         
       >
-        <div className="bg-white rounded-[20px] p-5 hover:border-[2px]  hover:border-[#3D1562] ">
+        <div className="bg-white rounded-[20px] p-5 hover:outline  hover:border-[#3D1562] ">
           <div
             className={`rounded-lg relative transition-all duration-300 ${"bg-white/50 backdrop-blur-sm"}`}
           >
@@ -381,7 +382,7 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
                 <div className="w-10 h-10 bg-[#F5F5F5] rounded-full flex items-center justify-center">
-                  <span className="text-xl font-bold text-[#3D1562]">
+                  <span className="text-xl uppercase font-bold text-[#3D1562]">
                     {candidate.initials}
                   </span>
                 </div>
@@ -400,7 +401,7 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
                 <button
                   onClick={handleViewProfile}
                   disabled={!candidate.profileUrl}
-                  className={`border border-black/20 rounded-sm p-2 w-22 flex justify-center items-center  space-x-1 transition-opacity ${
+                  className={`border border-black/20 rounded-xl p-2 w-22 flex justify-center items-center  space-x-1 transition-opacity ${
                     candidate.profileUrl
                       ? "cursor-pointer hover:opacity-80"
                       : "cursor-not-allowed opacity-50"
@@ -463,15 +464,15 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
               </div>
 
               {/* Save / Saved Button */}
-              <div className="flex justify-center mt-2">
+              <div className="flex justify-center gap-2 mt-2">
                 {isForSavedList && (
                   <>
                     <button
-                      className={`w-full max-w-[40px] bg-white  mr-2  hover:opacity-80 rounded-xl text-sm font-bold px-3 py-1.5 transition-all duration-300 ease-in-out
+                      className={`w-full max-w-[40px] bg-white flex justify-center items-center  hover:opacity-80 hover:bg-gray-200 rounded-xl text-sm font-bold transition-all duration-300 ease-in-out
                 `}
                       onClick={handleDelete}
                     >
-                      <Delete />
+                     <BiTrash className=" text-red-400 text-xl" />
                     </button>
                   </>
                 )}
@@ -504,7 +505,7 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

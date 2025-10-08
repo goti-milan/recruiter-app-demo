@@ -281,6 +281,7 @@ export default function SaralPromptScreen() {
           inputRef.current?.blur();
           setResults({ type: "profiles", data: response });
           setAllResults(response.matched_profiles);
+
         } else {
           // Load more - append new results
           const updatedResults = [...allResults, ...response.matched_profiles];
@@ -290,6 +291,7 @@ export default function SaralPromptScreen() {
             matched_profiles: updatedResults,
           };
           setResults({ type: "profiles", data: updatedResponse });
+          setIsSending(false);
         }
 
         // Pagination states
@@ -329,16 +331,7 @@ export default function SaralPromptScreen() {
         </button>
       )}
 
-      {/* Desktop Toggle Button - Only show when sidebar is collapsed */}
-      {/* {sidebarCollapsed && (
-        <button
-          onClick={handleToggleSidebar}
-          className="lg:block fixed top-4 left-4 z-[9999] text-[#3F1562] rounded-xl w-10 h-10 flex items-center justify-center cursor-pointer hover:bg-white/30 transition-all duration-200"
-        >
-          <ToggleSVG />
-        </button>
-      )} */}
-
+  
       {/* Overlay for mobile */}
       {isOpen && (
         <div
@@ -806,20 +799,14 @@ export default function SaralPromptScreen() {
                         <button
                           onClick={handleLoadMore}
                           disabled={isLoadingMore}
-                          className="px-8 py-2 bg-transparent border-2 font-semibold hover:scale-105 transition-all duration-200 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="px-8 py-2 rounded-xl font-semibold hover:scale-105 bg-[#3D1562] text-[white] transition-all duration-200 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                           style={{
-                            borderImage:
-                              "linear-gradient(to right, #de7fdf, #a881fa) 1",
-                            background:
-                              "linear-gradient(to right, #a881fa, #de7fdf)",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
-                            backgroundClip: "text",
+                            
                           }}
                         >
                           {isLoadingMore ? (
                             <div className="flex items-center gap-2">
-                              <div className="w-4 h-4 border-2 border-[#de7fdf] border-t-transparent rounded-full animate-spin"></div>
+                              <div className="w-4 h-4 border-2 border-t-[white] rounded-xl animate-spin"></div>
                               Loading...
                             </div>
                           ) : (

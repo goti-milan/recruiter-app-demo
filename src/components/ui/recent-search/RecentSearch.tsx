@@ -2,7 +2,7 @@ import RecentSearch from "@/assets/svg/saral-ai/recent-search/RecentSearch";
 import { getSearchHistory, SearchHistoryItem } from "@/helpers/apis/saral-ai";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import ButtonLoader from "../loader/ButtonLoader";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { getAuthorizedUserId } from "@/helpers/authorization";
 import { LOGIN } from "@/routes";
 
@@ -22,6 +22,8 @@ const RecentSearchTab = ({
   const [initialLoad, setInitialLoad] = useState(true);
   const [authorizedUserId, setAutorizedUserId] = useState<string>("");
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  const params = useParams();
+  const resultId = params.id;
 
   useEffect(() => {
     const userId = getAuthorizedUserId();
@@ -104,7 +106,7 @@ const RecentSearchTab = ({
             handleHistoryClick(item.id, item.query_text);
             handleMobileSidebarClose();
           }}
-          className="flex justify-between items-center bg-white rounded-xl px-3 py-2 mb-2 cursor-pointer transition-all duration-200 hover:shadow-md hover:border-[#e1d6f2] hover:bg-[#fefefe] active:transform active:scale-[0.98]"
+          className={`flex justify-between items-center rounded-xl px-3 py-2 mb-2 cursor-pointer transition-all duration-200 hover:shadow-md active:transform  ${resultId === item.id ? "bg-[#eeeaf0d6]" : "bg-white hover:border-[#e1d6f2] hover:bg-[#fefefe] "} `}
         >
           <div className="flex flex-col">
             <span className="text-sm font-medium text-[#2d1b4a] truncate max-w-[150px]">
@@ -121,7 +123,7 @@ const RecentSearchTab = ({
         </div>
       );
     });
-  }, [history, formatDate, handleHistoryClick, windowHeight]);
+  }, [history, formatDate, handleHistoryClick, windowHeight, resultId]);
 
   if (initialLoad && loading) {
     return (

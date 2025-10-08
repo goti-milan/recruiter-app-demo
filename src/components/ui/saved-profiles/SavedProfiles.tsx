@@ -127,13 +127,14 @@ const SavedProfilesTab: React.FC<SavedProfilesTabProps> = ({
   };
 
   return (
-    <div className="w-full mx-auto max-h-[90vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent">
-      <div className="m-auto flex items-center max-w-[1440px] justify-between rounded-2xl p-2 sm:p-4 bg-transparent container">
-        <span className="text-base sm:text-lg text-[#3D1562] font-medium pl-9">
+    <div className="w-full flex justify-center items-start mx-auto max-h-[85vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent">
+      <div className="max-w-[1440px] flex flex-col justify-items-center items-center">
+      <div className=" flex items-center max-w-[1440px] justify-between rounded-2xl py-2 sm:p-4 bg-transparent container">
+        <span className="text-base sm:text-lg text-[#3D1562] font-medium ">
           {profiles.length} Candidates Selected
         </span>
 
-        <div className="w-full max-w-[12rem] rounded-xl p-[1.5px] mr-9">
+        <div className="w-full max-w-[12rem] rounded-xl p-[1.5px]">
           <button
             onClick={() => handleMessageCandidate()}
             className="w-full rounded-xl outline hover:bg-[#3F1562] hover:text-white text-[#3F1562] border-[#3F1562] hover:outline-none bg-white py-2 font-semibold"
@@ -147,7 +148,7 @@ const SavedProfilesTab: React.FC<SavedProfilesTabProps> = ({
       </div>
 
       {/* Profiles Grid - Maintains current layout */}
-      <div className="m-auto h-full grid grid-cols-1 max-w-[1440px] sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 justify-items-center grid-1335-2 grid-1280-1320-2 grid-640-713-1">
+      <div className=" h-full grid grid-cols-1 max-w-[1440px] sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 justify-items-center grid-1335-2 grid-1280-1320-2 grid-640-713-1">
         {profiles.map((profile, i) => {
           const experienceData = JSON.parse(profile.experience || "[]");
           const overallExperience = calculateExperience(experienceData);
@@ -155,10 +156,7 @@ const SavedProfilesTab: React.FC<SavedProfilesTabProps> = ({
           const candidate = {
             id: profile.id,
             name: profile.name,
-            initials: profile.name
-              .split(" ")
-              .map((n) => n[0])
-              .join(""),
+            initials: profile.name[0],
             position: profile.headline ?? "N/A",
             experience: overallExperience.formatted,
             location: profile.location ?? "Unknown",
@@ -207,6 +205,8 @@ const SavedProfilesTab: React.FC<SavedProfilesTabProps> = ({
           </button>
         </div>
       )}
+    </div>
+
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import React, { useCallback, useRef, useState } from "react";
 import UpdateEditorSvg from "../../../assets/svg/saral-ai/update-editor/updateEditor";
 import SendLinkdinSvg from "@/assets/svg/saral-ai/send-linkdin/SendLinkdinSvg";
+import Linkdin from "@/assets/svg/saral-ai/linkdin/Linkdin";
+import { FiEdit } from "react-icons/fi";
 
 interface RichTextEditorProps {
   candidate: any;
@@ -476,19 +478,25 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ candidate }) => {
           </>
         ) : (
           <>
-            <UpdateEditorSvg onClick={() => setIsEditMode(true)} />
+            <button
+              onClick={() => setIsEditMode(true)}
+              className={`flex gap-2 items-center h-[40px] border-[2px] p-2 rounded-lg border-[#3F1562] opacity-100`}
+            >
+              <FiEdit className="text-[#3F1562] text-lg font-medium" />
+            </button>
             <div className="relative inline-block">
               <button
                 onClick={handleClick}
                 onMouseEnter={() => !copied && setShowTooltip(true)}
                 onMouseLeave={() => !copied && setShowTooltip(false)}
-                className={`flex items-center h-[40px]  ${
-                  !copied
-                    ? "opacity-50 cursor-not-allowed"
-                    : "opacity-100 "
+                className={`flex gap-2 items-center h-[40px] border-[2px] p-2 rounded-lg border-[#3F1562]   ${
+                  !copied ? "opacity-50 cursor-not-allowed" : "opacity-100"
                 }`}
               >
-                <SendLinkdinSvg />
+                <span className="text-[#0077B4] text-xs font-medium mt-[3px]">
+                  Send on Linkedin
+                </span>
+                <Linkdin />
               </button>
 
               {showTooltip && (

@@ -96,8 +96,9 @@ const RecentSearchTab = ({
     if (windowHeight < 753) {
       return null;
     }
+    let data = history?.data
 
-    return history.slice(0, 4).map((item) => {
+    return data?.slice(0, 4).map((item) => {
       const { date, time } = formatDate(item.created_at);
       return (
         <div

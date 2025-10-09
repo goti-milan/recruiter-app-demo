@@ -330,6 +330,8 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
         // --- Save Profile ---
         const res = await createSavedProfile(X_USER_ID, candidate.id);
         // @ts-ignore
+        console.log('res', res);
+        
         if (res.data) {
           setSavedProfileId((res as any).id);
           setIsSaved(true);

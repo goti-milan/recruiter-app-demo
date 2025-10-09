@@ -201,12 +201,14 @@ export default function SaralPromptScreen() {
     if (inpValue !== "" && inpValue) {
       try {
         setIsRephrasing(true);
-        const response = await enhancePrompt(authorizedUserId, inpValue);
-        if (response.success) {
+        const response: any = await enhancePrompt(authorizedUserId, inpValue);
+        console.log('resose',response);
+        
+        if (response.status === "success") {
           // Animate text change like in PromptScreen
           setAnimatingText(true);
           setTimeout(() => {
-            setInpValue(response.enhanced_query);
+            setInpValue(response.data );
             setAnimatingText(false);
           }, 400);
         }
@@ -220,10 +222,12 @@ export default function SaralPromptScreen() {
 
   const SavedProfileCount = async () => {
     try {
-      const response: SavedProfileCountResponse = await getSavedProfilesCount(
+      const response: any = await getSavedProfilesCount(
         authorizedUserId
       );
-      setSavedProfileCount(response.total);
+      console.log('count',response);
+      
+      setSavedProfileCount(response.data);
     } catch (error) {
       console.error("Error enhancing search:", error);
     }
@@ -422,7 +426,6 @@ export default function SaralPromptScreen() {
               }}
             >
               {/* New Chat icon */}
-              {/* <NewChat /> */}
               <BiEdit className="text-2xl" />
               <span className={`${sidebarCollapsed ? "lg:hidden" : ""}`}>
                 New Chat
@@ -447,15 +450,15 @@ export default function SaralPromptScreen() {
               <span className={`${sidebarCollapsed ? "lg:hidden" : ""}`}>
                 Saved Profiles
               </span>
-              <span
-                className={`ml-auto text-xs bg-[#dcd4e0] h-6x text-base px-2 py-0.5 rounded-sm ${
+             {!!savedProfileCount && savedProfileCount > 0 && <span
+                className={`ml-auto flex justify-center items-center text-xs bg-[#dcd4e0] h-6x text-base px-2 py-0.5 rounded-sm ${
                   lastPath === "saved-campaigns"
                     ? "bg-[#ffffff] text-[#000000]"
                     : "text-[deepViolet]"
                 } font-medium ${sidebarCollapsed ? "lg:hidden" : ""}`}
               >
                 {savedProfileCount}
-              </span>
+              </span>}
             </button>
 
             <button

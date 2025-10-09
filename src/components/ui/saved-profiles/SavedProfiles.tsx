@@ -66,7 +66,7 @@ const SavedProfilesTab: React.FC<SavedProfilesTabProps> = ({
         setLoading(true);
         setProfiles([]);
       }
-      const res: SavedProfilesResponse = await getSavedProfiles(
+      const {data:res}: any = await getSavedProfiles(
         authorizedUserId,
         page,
         limit
@@ -128,8 +128,8 @@ const SavedProfilesTab: React.FC<SavedProfilesTabProps> = ({
 
   return (
     <div className="w-full flex justify-center items-start mx-auto max-h-[85vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent">
-      <div className="max-w-[1440px] flex flex-col justify-items-center items-center">
-      <div className=" flex items-center max-w-[1440px] justify-between rounded-2xl py-2 sm:p-4 bg-transparent container">
+      <div className="max-w-[1440px] flex flex-col gap-3 p-3 justify-items-center items-center">
+      <div className=" flex items-center justify-between rounded-2xl xl:p-0  sm:p-4 w-full">
         <span className="text-base sm:text-lg text-[#3D1562] font-medium ">
           {profiles.length} Candidates Selected
         </span>

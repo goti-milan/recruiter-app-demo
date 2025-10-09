@@ -1,8 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
-import UpdateEditorSvg from "../../../assets/svg/saral-ai/update-editor/updateEditor";
-import SendLinkdinSvg from "@/assets/svg/saral-ai/send-linkdin/SendLinkdinSvg";
 import Linkdin from "@/assets/svg/saral-ai/linkdin/Linkdin";
 import { FiEdit } from "react-icons/fi";
+import { FiCopy } from "react-icons/fi";
 
 interface RichTextEditorProps {
   candidate: any;
@@ -252,18 +251,18 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ candidate }) => {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto bg-[#fffdfd] rounded-2xl hover:border-[2px] hover:border-[#3F1562] overflow-hidden">
+    <div className="w-full max-w-[570px] mx-auto bg-[#fffdfd] rounded-2xl p-2 hover:outline hover:border-[#3F1562] overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gray-50/50">
+      <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gray-50/50">
         <div className="flex items-center space-x-3">
           <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
             <span className="text-purple-700 font-bold text-xl">L</span>
           </div>
           <div>
-            <div className="text-base font-bold text-gray-900">
+            <div className="text-base sm:text-xs font-bold text-gray-900">
               {candidate.name}
             </div>
-            <div className="text-sm text-gray-500 truncate max-w-[45vh] editor-occ">
+            <div className="text-sm text-gray-500 truncate max-w-[36vh] editor-occ">
               {candidate.headline}
             </div>
           </div>
@@ -273,16 +272,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ candidate }) => {
             onClick={handleCopy}
             className="flex items-center space-x-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-150"
           >
-            <svg
-              className="w-4 h-4 text-[#3D1562]"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-            </svg>
+            <FiCopy className="w-4 h-4 text-[#3D1562]" />
+
             <span className="text-sm font-medium text-[#3D1562]">
               {copied ? "Copied!" : "Copy"}
             </span>
@@ -293,7 +284,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ candidate }) => {
       {/* Custom Toolbar */}
       {isEditMode && (
         <div
-          className={`flex items-center justify-between px-6 py-4 border-t mx-8 rounded-t-xl border-gray-100 ${
+          className={`flex h-10 items-center justify-between px-6 py-2 border-t mx-8 rounded-t-xl border-gray-100 ${
             isEditMode ? "bg-[#7517cc1f]" : "bg-[#fffdfd]"
           }`}
         >
@@ -443,12 +434,14 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ candidate }) => {
       <div
         className={`relative ${
           isEditMode ? "bg-[#7517cc1f]" : "bg-[#fffdfd]"
-        } mx-8`}
+        } mx-2`}
       >
         <div
           ref={editorRef}
           contentEditable={isEditMode}
-          className="h-50 px-6 py-4 text-sm leading-relaxed text-gray-700 focus:outline-none editor-content overflow-y-auto"
+          className={`${
+            isEditMode ? "h-41" : "h-50"
+          } px-2 py-2 text-sm leading-relaxed text-gray-700 focus:outline-none editor-content overflow-y-auto`}
           onKeyDown={handleKeyDown}
           onInput={handleInput}
           suppressContentEditableWarning={true}
@@ -457,20 +450,20 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ candidate }) => {
 
       {/* Footer */}
       <div
-        className={`flex items-center justify-end space-x-3 px-6 py-4 rounded-b-xl border-t border-gray-100 mx-8 mb-8   ${
+        className={`flex items-center justify-end gap-3 px-2 pt-3 pb-2 rounded-b-xl border-t border-gray-100 mx-4    ${
           isEditMode ? "bg-[#7517cc1f]" : "bg-[#fffdfd]"
         }`}
       >
         {isEditMode ? (
           <>
             <button
-              className="px-6 py-2 text-sm text-[#3F1562] bg-[#fafafa]   hover:outline  duration-150 rounded-lg "
+              className="p-2 text-sm text-[#3F1562] bg-[#fafafa]   hover:outline  duration-150 rounded-lg "
               onClick={() => setIsEditMode(false)}
             >
               Cancel
             </button>
             <button
-              className="px-6 py-2 bg-[#3F1562] text-[#ffffff] hover:bg-[#ffffff] hover:text-[#3F1562] border-[#3F1562] text-sm rounded-lg transition-colors duration-150 font-medium"
+              className="p-2 bg-[#3F1562] text-[#ffffff] hover:bg-[#ffffff] hover:text-[#3F1562] border-[#3F1562] text-sm rounded-lg transition-colors duration-150 font-medium"
               onClick={() => setIsEditMode(false)}
             >
               Done

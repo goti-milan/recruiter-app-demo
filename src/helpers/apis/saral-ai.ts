@@ -1,6 +1,6 @@
 import axios from "axios";
-// const BASE_URL = "/api/v1";
-const BASE_URL = "https://saral-ai-api.headsin.co/api/v1";
+const BASE_URL = "/api/v1";
+// const BASE_URL = "https://saral-ai-api.headsin.co/api/v1";
 
 export interface HealthCheckResponse {
   status: string;
@@ -8,9 +8,16 @@ export interface HealthCheckResponse {
 }
 
 export interface EnhancePromptResponse {
-  success: boolean;
-  enhanced_query: string;
+ status: string;
+ data: Response
 }
+
+export interface Response {
+  status: boolean;
+  data: string;
+  message: string;
+}
+
 export interface SearchProfilesResponse {
   success: boolean;
   matched_profiles: MatchedProfile[];
@@ -71,26 +78,21 @@ export const healthCheck = async (): Promise<HealthCheckResponse> => {
 };
 
 export const enhancePrompt = async (USER_ID: string, query: string): Promise<EnhancePromptResponse> => {
-  const response = await axios.post(
-    `${BASE_URL}/ai-query/enhance`,
-    { prompt: query },
+  const response = await axios.get(
+    `${BASE_URL}/ai-query/enhance?prompt=${query}`,
     {
       headers: {
         "X-User-ID": USER_ID,
-        "Content-Type": "application/json",
+        // "Content-Type": "application/json",
       },
     },
   );
-  return response.data.data;
+  return response.data
 };
 
-export const searchProfiles = async (USER_ID: string, query: string, page: number = 0): Promise<SearchProfilesResponse> => {
-  const response = await axios.post<SearchProfilesResponse>(
-    `${BASE_URL}/ai-query/search-profiles`,
-    {
-      query,
-      page,
-    },
+export const searchProfiles = async (USER_ID: string, query: string, page: number = 0, histroyId?: string): Promise<SearchProfilesResponse> => {
+  const response = await axios.get<SearchProfilesResponse>(
+    `${BASE_URL}/ai-query/search-profiles?page_number=${page}&query=${query}${!!histroyId && `&search_history_id=${histroyId}`}`,
     {
       headers: {
         "X-User-ID": USER_ID,
@@ -292,6 +294,7 @@ export const getSavedProfiles = async (USER_ID: string, page = 1, limit = 10): P
       "X-User-ID": USER_ID,
     },
   });
+console.log('response',response);
 
   return response.data;
 };
